@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G9 Launcher - Офіційний сайт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Базові налаштування та змінні (Material You кольори) */
+        :root {
+            --primary-green: #4caf50;
+            --light-green: #e8f5e9;
+            --dark-green: #2e7d32;
+            --g-blue: #1976d2;
+            --n-yellow: #fbc02d;
+            --text-dark: #1b5e20;
+            --text-gray: #4caf50;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            /* Приємний зелений градієнтний фон */
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анімації */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Навігація (Glassmorphism) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo .g { color: var(--g-blue); }
+        .logo .n { color: var(--n-yellow); text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        .logo .text { color: var(--text-dark); }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Геройська секція */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            color: #2e7d32;
+        }
+
+        /* Кнопка завантаження (Material You) */
+        .download-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .download-btn:hover {
+            background: var(--dark-green);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(46, 125, 50, 0.4);
+        }
+
+        .os-support {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #1b5e20;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Секції контенту */
+        section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* Картки (Glassmorphism) */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .glass-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-green);
+        }
+
+        /* Сітка для скріншотів */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px dashed #81c784;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-green);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-placeholder:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--primary-green);
+        }
+
+        /* Футер та Telegram */
+        footer {
+            text-align: center;
+            padding: 4rem 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            margin-top: 4rem;
+        }
+
+        .tg-btn {
+            background: #24A1DE; /* Офіційний колір Telegram */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(36, 161, 222, 0.3);
+        }
+
+        .tg-btn:hover {
+            background: #1d8ec4;
+            transform: scale(1.05);
+        }
+
+        .copyright {
+            color: #2e7d32;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="g">G</span><span class="n">9</span> <span class="text">Launcher</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Завантажити</a></li>
+                <li><a href="#about">Про проєкт</a></li>
+                <li><a href="#features">Можливості</a></li>
+                <li><a href="#gallery">Інтерфейс</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <h1><span class="g-blue" style="color: var(--g-blue)">G</span><span class="n-yellow" style="color: var(--n-yellow)">9</span> Launcher</h1>
+            <p>Новий погляд на твій ігровий досвід. Швидкий, сучасний та створений з увагою до кожної деталі.</p>
+            
+            <a href="#" class="download-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Завантажити
+            </a>
+            <div class="os-support">
+                🪟 Підтримується на Windows 10 та 11
+            </div>
+        </section>
+
+        <section id="about" class="animate-on-scroll">
+            <h2 class="section-title">Про проект</h2>
+            <div class="glass-card">
+                <h3>Ідея та створення</h3>
+                <p>Лаунчер було створено, бо багато хто використовував TLauncher, який є російським. Тому з нуля було створено надійний та кращий- G9 Launcher."</p>
+                <br>
+                <p>Лаунчер розроблено для учнів гімназії з модифікованим логотипом.</p>
+            </div>
+        </section>
+
+        <section id="features" class="animate-on-scroll">
+            <h2 class="section-title">Чому саме ми?</h2>
+            <div class="screenshot-grid">
+                <div class="glass-card">
+                    <h3>🚀 Швидкодія</h3>
+                    <p>Програма надає можливість всередині неї змінити параметри для підвищення FPS у грі. Розробники створюють його за допомогою ШІ інструментів та редагують код.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>🎨 Сучасний дизайн</h3>
+                    <p>Інтерфейс створено за мотивами оригінального лаунчеру гри з зручним положення елементів (UX/UI).</p>
+                </div>
+                <div class="glass-card">
+                    <h3>🔒 Безпека</h3>
+                    <p>Програма немає у собі вірусів, використовуються надійні сервери для завантаження гри на ваш пристрій.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="animate-on-scroll">
+            <h2 class="section-title">Інтерфейс лаунчера</h2>
+            <div class="glass-card">
+                <p style="text-align: center; margin-bottom: 2rem;">Оцініть красу та зручність нашого дизайну ще до завантаження.</p>
+                <div class="screenshot-grid">
+                    <img src="main-menu.png" alt="Головне меню G9 Launcher" style="width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    
+                    <img src="settings.png" alt="Налаштування G9 Launcher" style="width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    
+                    <img src="versions.png" alt="Вибір версій G9 Launcher" style="width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <h3 style="margin-bottom: 1.5rem; color: var(--dark-green);">Залишайся на зв'язку з розробниками</h3>
+        <a href="https://t.me/alfastudiosOFFICIAL" target="_blank" class="tg-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            ALFA Studios у Telegram
+        </a>
+        <p class="copyright">© 2026 ALFA Studios. Всі права захищено.</p>
+    </footer>
+
+    <script>
+        // Плавний скрол для навігації
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer для анімації при прокручуванні
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.animate-on-scroll').forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
