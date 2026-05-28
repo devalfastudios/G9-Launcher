@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G9 Launcher - Офіційний сайт</title>
+    <title>G9 Launcher — Твій шлях до Minecraft</title>
+    <meta name="description" content="G9 Launcher — найзручніший лаунчер для Minecraft. Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень.">
+    <meta name="keywords" content="G9 Launcher, Minecraft лаунчер, завантажити Minecraft, безкоштовний Minecraft, ALFA Studios">
+    <meta name="author" content="ALFA Studios">
+    <meta property="og:title" content="G9 Launcher — Твій шлях до Minecraft">
+    <meta property="og:description" content="Найзручніший лаунчер для Minecraft. Швидко, безпечно, безкоштовно.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="main-menu.png">
+    <meta name="theme-color" content="#4caf50">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -47,6 +55,72 @@
         nav ul { list-style:none; display:flex; gap:1.4rem; }
         nav a { text-decoration:none; color:var(--text-dark); font-weight:600; font-size:.92rem; padding:6px 13px; border-radius:50px; transition:background .25s; }
         nav a:hover { background:rgba(255,255,255,0.5); }
+
+        /* BURGER BUTTON */
+        .burger {
+            display:none; flex-direction:column; justify-content:center; gap:5px;
+            width:40px; height:40px; cursor:pointer; border:none;
+            background:rgba(255,255,255,.4); border-radius:12px; padding:8px;
+            transition:background .25s; border:1px solid var(--glass-border);
+        }
+        .burger:hover { background:rgba(255,255,255,.65); }
+        .burger span {
+            display:block; width:100%; height:2.5px;
+            background:var(--text-dark); border-radius:4px;
+            transition:transform .3s ease, opacity .3s ease;
+        }
+        .burger.open span:nth-child(1) { transform:translateY(7.5px) rotate(45deg); }
+        .burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+        .burger.open span:nth-child(3) { transform:translateY(-7.5px) rotate(-45deg); }
+
+        /* MOBILE NAV DROPDOWN */
+        @media(max-width: 768px) {
+            .burger { display:flex; }
+            nav {
+                position:absolute; top:100%; left:0; width:100%;
+                background:rgba(232,245,233,.97); backdrop-filter:blur(16px);
+                border-bottom:1px solid var(--glass-border);
+                box-shadow:0 8px 24px rgba(31,38,135,.12);
+                display:none; z-index:899;
+            }
+            nav.open { display:block; animation:fadeInUp .25s ease; }
+            nav ul { flex-direction:column; gap:0; padding:.5rem 0; }
+            nav ul li { width:100%; }
+            nav a {
+                display:block; padding:13px 24px; border-radius:0; font-size:1rem;
+                border-bottom:1px solid rgba(76,175,80,.1);
+                transition:background .2s;
+            }
+            nav ul li:last-child a { border-bottom:none; }
+            nav a:hover { background:rgba(255,255,255,.7); }
+
+            /* Mobile hero tweaks */
+            .hero h1 { font-size:2.8rem; }
+            .hero-slogan { font-size:1.2rem; }
+            .dl-btn { font-size:.88rem; padding:11px 18px; }
+            section { padding:4rem 5%; }
+        }
+
+        /* VERSION BADGE */
+        .version-badge {
+            display:inline-flex; align-items:center; gap:8px;
+            background:rgba(255,255,255,.38); border:1px solid rgba(76,175,80,.35);
+            border-radius:50px; padding:6px 16px 6px 10px;
+            font-size:.82rem; font-weight:600; color:var(--primary-dark);
+            margin-top:.8rem; backdrop-filter:blur(6px);
+        }
+        .version-dot {
+            width:8px; height:8px; border-radius:50%;
+            background:var(--primary);
+            box-shadow:0 0 0 3px rgba(76,175,80,.25);
+            animation:pulse 2s ease-in-out infinite;
+            flex-shrink:0;
+        }
+        @keyframes pulse {
+            0%,100% { box-shadow:0 0 0 3px rgba(76,175,80,.25); }
+            50%      { box-shadow:0 0 0 6px rgba(76,175,80,.1); }
+        }
+        .version-num { font-family:'JetBrains Mono','Courier New',monospace; font-weight:700; color:var(--primary-dark); }
 
         /* HERO */
         .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 20px; animation:fadeInUp .9s ease-out; }
@@ -129,6 +203,16 @@
         .modal-dl-btn.enabled { opacity:1; pointer-events:all; }
         .modal-dl-btn.enabled:hover { background:var(--primary-dark); transform:translateY(-2px); }
 
+
+        /* HERO SLOGAN */
+        .hero-slogan { font-size:1.55rem; font-weight:700; color:var(--primary-dark); margin-bottom:.4rem; letter-spacing:-.3px; }
+        .hero-sub { font-size:1rem; max-width:520px; margin-bottom:2.2rem; color:#2e7d32; }
+
+        /* ABOUT MINECRAFT section */
+        .about-mc { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center; }
+        @media(max-width:700px){ .about-mc{grid-template-columns:1fr;} }
+        .mc-pixel-art { width:100%; max-width:340px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 36px rgba(31,38,135,.15); display:block; }
+
         /* FOOTER */
         footer { text-align:center; padding:3.5rem 20px; background:rgba(255,255,255,.2); backdrop-filter:blur(10px); border-top:1px solid var(--glass-border); margin-top:4rem; }
         .tg-btn { background:#24A1DE; color:#fff; padding:11px 22px; border-radius:50px; text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:8px; transition:all .3s; margin-bottom:1.5rem; box-shadow:0 4px 15px rgba(36,161,222,.3); }
@@ -183,22 +267,26 @@
 <!-- HEADER -->
 <header>
     <div class="logo"><span class="g">G</span><span class="n">9</span> <span class="t">Launcher</span></div>
-    <nav>
+    <nav id="mainNav">
         <ul>
-            <li><a href="#hero">Головна</a></li>
-            <li><a href="#features">Можливості</a></li>
-            <li><a href="#tutorials">Туторіали</a></li>
-            <li><a href="#gallery">Інтерфейс</a></li>
-            <li><a href="#support">Підтримка</a></li>
+            <li><a href="#hero" onclick="closeNav()">Головна</a></li>
+            <li><a href="#features" onclick="closeNav()">Можливості</a></li>
+            <li><a href="#tutorials" onclick="closeNav()">Туторіали</a></li>
+            <li><a href="#gallery" onclick="closeNav()">Інтерфейс</a></li>
+            <li><a href="#support" onclick="closeNav()">Підтримка</a></li>
         </ul>
     </nav>
+    <button class="burger" id="burger" onclick="toggleNav()" aria-label="Меню">
+        <span></span><span></span><span></span>
+    </button>
 </header>
 
 <main>
     <!-- HERO -->
     <section class="hero" id="hero" style="max-width:100%;">
         <h1><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</h1>
-        <p>Новий погляд на твій ігровий досвід. Швидкий, сучасний та створений з увагою до кожної деталі.</p>
+        <p class="hero-slogan">Твій шлях до Minecraft</p>
+        <p class="hero-sub">Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень. Безкоштовно та безпечно.</p>
         <div class="download-group">
             <a href="https://www.mediafire.com/file/lh8qvy374oyv814/G9_Launcher.rar/file" class="dl-btn dl-btn-primary" target="_blank">
                 <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -216,6 +304,10 @@
         <div class="os-support">
             <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             Оберіть спосіб завантаження під вашу ОС
+        </div>
+        <div class="version-badge">
+            <span class="version-dot"></span>
+            Актуальна версія:&nbsp;<span class="version-num">v1.4.0</span>
         </div>
     </section>
 
@@ -243,6 +335,26 @@
                     Безпека
                 </h3>
                 <p>Програма не має у собі вірусів, використовуються надійні сервери для завантаження гри на ваш пристрій.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ABOUT MINECRAFT -->
+    <section id="about" class="animate-on-scroll">
+        <h2 class="section-title">Що таке G9 Launcher?</h2>
+        <div class="glass-card">
+            <div class="about-mc">
+                <div>
+                    <h3 style="font-size:1.4rem;margin-bottom:1rem;color:var(--primary-dark);">Лаунчер для запуску Minecraft</h3>
+                    <p style="color:#2e5e30;margin-bottom:1rem;font-size:.97rem;">
+                        <strong>G9 Launcher</strong> — це програма для завантаження та запуску <strong>Minecraft</strong> на твоєму ПК. Просто встанови, обери версію та грай — без зайвих кроків.
+                    </p>
+                    <p style="color:#2e5e30;font-size:.97rem;">
+                        Підтримуються всі популярні версії Minecraft, включно з модами та знаменитими збірками. Вбудований оптимізатор FPS дозволяє грати навіть на слабких ПК.
+                    </p>
+                </div>
+                <img src="minecraft-block.png" alt="Minecraft" class="mc-pixel-art">
             </div>
         </div>
     </section>
@@ -448,7 +560,26 @@ G9 Launcher автоматично застосовує сучасні пара�
         document.getElementById('panel-' + name).classList.add('active');
     }
 
-    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeModal('patcherModal'); } });
+    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeModal('patcherModal'); closeNav(); } });
+
+    function toggleNav() {
+        const nav = document.getElementById('mainNav');
+        const burger = document.getElementById('burger');
+        nav.classList.toggle('open');
+        burger.classList.toggle('open');
+    }
+    function closeNav() {
+        document.getElementById('mainNav').classList.remove('open');
+        document.getElementById('burger').classList.remove('open');
+    }
+    // Close nav on outside click
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('mainNav');
+        const burger = document.getElementById('burger');
+        if(nav.classList.contains('open') && !nav.contains(e.target) && !burger.contains(e.target)) {
+            closeNav();
+        }
+    });
 </script>
 </body>
 </html>
