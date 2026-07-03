@@ -49,7 +49,9 @@
             border-bottom:1px solid var(--glass-border); z-index:900;
             display:flex; justify-content:space-between; align-items:center;
             box-shadow:var(--shadow);
+            transition: transform .4s cubic-bezier(.4,0,.2,1);
         }
+        header.header-hidden { transform: translateY(-100%); }
         .logo { font-size:1.7rem; font-weight:900; letter-spacing:-1px; }
         .logo .g { color:var(--g-blue); } .logo .n { color:var(--n-yellow); } .logo .t { color:var(--text-dark); }
         nav ul { list-style:none; display:flex; gap:1.4rem; }
@@ -807,6 +809,53 @@ G9 Launcher автоматично застосовує сучасні пара�
             closeNav();
         }
     });
+
+    // Auto-hide header on scroll down, show smoothly on scroll up
+    (function() {
+        const header = document.querySelector('header');
+        let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
+        let ticking = false;
+        const threshold = 8; // ignore tiny scroll jitters
+        const minScroll = 60; // don't hide until scrolled past this point
+
+        function onScroll() {
+            const nav = document.getElementById('mainNav');
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Never hide while mobile nav dropdown is open
+            if (nav.classList.contains('open')) {
+                lastScroll = currentScroll;
+                ticking = false;
+                return;
+            }
+
+            const diff = currentScroll - lastScroll;
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && currentScroll > minScroll) {
+                    // scrolling down
+                    header.classList.add('header-hidden');
+                } else {
+                    // scrolling up
+                    header.classList.remove('header-hidden');
+                }
+                lastScroll = currentScroll;
+            }
+
+            if (currentScroll <= minScroll) {
+                header.classList.remove('header-hidden');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+    })();
 </script>
 </body>
 </html>
