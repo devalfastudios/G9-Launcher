@@ -30,6 +30,15 @@
         html {
             background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
         }
+        /* Force GPU compositing on all blurred/fixed layers to prevent
+           white flash / blank frames during fast scroll on mobile Chrome */
+        header, .glass-card, .tutorial-item, .os-support, footer, nav#mainNav,
+        .lightbox-overlay, .modal-overlay {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
         body {
             font-family: 'Outfit', sans-serif;
             background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
@@ -327,6 +336,18 @@
         .copyright { color:#2e7d32; font-size:.88rem; }
 
         .icon { flex-shrink:0; }
+
+        /* Reduce blur cost on mobile — heavy backdrop-filter across many
+           stacked layers causes Android Chrome to blank/whiten the screen
+           for a frame or two during fast scroll. Lighter blur = smoother scroll. */
+        @media (max-width: 768px) {
+            header { backdrop-filter: blur(8px); }
+            nav#mainNav { backdrop-filter: blur(8px); }
+            .glass-card { backdrop-filter: blur(8px); }
+            .tutorial-item { backdrop-filter: blur(6px); }
+            .os-support { backdrop-filter: blur(3px); }
+            footer { backdrop-filter: blur(6px); }
+        }
     </style>
 </head>
 <body>
