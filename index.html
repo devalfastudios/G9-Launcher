@@ -416,13 +416,13 @@
 
 <!-- HEADER -->
 <header>
-    <div class="logo"><span class="g">G</span><span class="n">9</span> <span class="t">Launcher</span></div>
+    <div class="logo" onclick="goHome()" style="cursor:pointer;"><span class="g">G</span><span class="n">9</span> <span class="t">Launcher</span></div>
     <nav id="mainNav">
         <ul>
-            <li><a href="#hero" onclick="closeNav()">Головна</a></li>
             <li><a href="#features" onclick="closeNav()">Можливості</a></li>
-            <li><a href="#tutorials" onclick="closeNav()">Гайд</a></li>
+            <li><a href="#tutorials" onclick="closeNav()">Гайди</a></li>
             <li><a href="#support" onclick="closeNav()">Підтримка</a></li>
+            <li><a href="#" onclick="showNews();closeNav();return false;">Новини</a></li>
             <li><a href="#" onclick="showAddons();closeNav();return false;">Доповнення</a></li>
         </ul>
     </nav>
@@ -519,7 +519,7 @@
 
     <!-- TUTORIALS -->
     <section id="tutorials" class="animate-on-scroll">
-        <h2 class="section-title">Гайд по лаунчеру</h2>
+        <h2 class="section-title">Гайди по лаунчеру</h2>
         <div class="tutorial-list">
             <div class="tutorial-item" id="tut-1">
                 <div class="tutorial-header" onclick="toggleTutorial('tut-1')">
@@ -712,7 +712,21 @@ G9 Launcher автоматично застосовує сучасні пара�
     <div class="addons-panel" id="panel-fps">
         <div class="addons-grid">
             <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>G9 FPS PACK</h3><p>Офіційний набір оптимізаційних налаштувань та модів від G9 Studios для максимального приросту FPS на будь-якому ПК.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/05g7y9mxqq9lozd/G9_FPS_PACK_26.2_FABRIC.zip/file" target="_blank" rel="noopener">Завантажити</a></div>
+            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></div><h3>G9 MOBILE FPS PACK</h3><p>Версія FPS паку для мобільних лаунчерів — PojavLauncher та FoldCraft Launcher. Оптимізація продуктивності на телефонах і планшетах.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span><span class="addon-ver">PojavLauncher / FoldCraft</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/mau3z7kliwog3sz/MOBILE_FPS_PACK_FABRIC_26.2.zip/file" target="_blank" rel="noopener">Завантажити</a></div>
         </div>
+    </div>
+</div>
+
+<div id="news-page" class="addons-page">
+    <button class="addons-back-btn" onclick="hideNews()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Назад
+    </button>
+    <h2 class="section-title" style="text-align:left;margin-bottom:.5rem;">Новини</h2>
+    <p style="color:#2e5e30;margin-bottom:2rem;font-size:.95rem;">Останні оновлення, релізи та новини від команди G9 Studios.</p>
+    <div class="addons-grid">
+        <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>Вихід G9 MOBILE FPS PACK</h3><p>Додано FPS пак для мобільних лаунчерів — PojavLauncher та FoldCraft Launcher. Доступний у розділі "Доповнення".</p><div class="addon-meta"><span class="addon-ver">26.2</span></div></div>
+        <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><h3>Більше новин незабаром</h3><p>Слідкуй за оновленнями лаунчера та новими доповненнями у цьому розділі.</p><span class="addon-soon">НЕЗАБАРОМ</span></div>
     </div>
 </div>
 
@@ -791,9 +805,10 @@ G9 Launcher автоматично застосовує сучасні пара�
         document.getElementById('panel-' + name).classList.add('active');
     }
 
-    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeModal('patcherModal'); closeModal('coffeeModal'); closeNav(); if(document.getElementById('addons-page').classList.contains('active')) hideAddons(); } });
+    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeModal('patcherModal'); closeModal('coffeeModal'); closeNav(); if(document.getElementById('addons-page').classList.contains('active')) hideAddons(); if(document.getElementById('news-page').classList.contains('active')) hideNews(); } });
 
     function showAddons() {
+        hideNews(true);
         document.getElementById('addons-page').classList.add('active');
         document.querySelector('main').style.display = 'none';
         document.querySelector('footer').style.display = 'none';
@@ -803,6 +818,27 @@ G9 Launcher автоматично застосовує сучасні пара�
         document.getElementById('addons-page').classList.remove('active');
         document.querySelector('main').style.display = '';
         document.querySelector('footer').style.display = '';
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function showNews() {
+        hideAddons(true);
+        document.getElementById('news-page').classList.add('active');
+        document.querySelector('main').style.display = 'none';
+        document.querySelector('footer').style.display = 'none';
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function hideNews() {
+        document.getElementById('news-page').classList.remove('active');
+        document.querySelector('main').style.display = '';
+        document.querySelector('footer').style.display = '';
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function goHome() {
+        document.getElementById('addons-page').classList.remove('active');
+        document.getElementById('news-page').classList.remove('active');
+        document.querySelector('main').style.display = '';
+        document.querySelector('footer').style.display = '';
+        closeNav();
         window.scrollTo({top:0, behavior:'smooth'});
     }
     function switchAddonTab(name, btn) {
