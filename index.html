@@ -1,37 +1,56 @@
 <!DOCTYPE html>
+
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G9 Launcher — Твій шлях до Minecraft</title>
-    <meta name="description" content="G9 Launcher — найзручніший лаунчер для Minecraft. Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень.">
-    <meta name="keywords" content="G9 Launcher, Minecraft лаунчер, завантажити Minecraft, безкоштовний Minecraft, G9 Studios">
-    <meta name="author" content="G9 Studios">
-    <meta property="og:title" content="G9 Launcher — Твій шлях до Minecraft">
-    <meta property="og:description" content="Найзручніший лаунчер для Minecraft. Швидко, безпечно, безкоштовно.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="main-menu.png">
-    <meta name="theme-color" content="#4caf50">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>G9 Launcher — Твій шлях до Minecraft</title>
+<meta content="G9 Launcher — найзручніший лаунчер для Minecraft. Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень." name="description"/>
+<meta content="G9 Launcher, Minecraft лаунчер, завантажити Minecraft, безкоштовний Minecraft, G9 Studios" name="keywords"/>
+<meta content="G9 Studios" name="author"/>
+<meta content="G9 Launcher — Твій шлях до Minecraft" property="og:title"/>
+<meta content="Найзручніший лаунчер для Minecraft. Швидко, безпечно, безкоштовно." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="main-menu.png" property="og:image"/>
+<meta content="#0d1912" name="theme-color"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&amp;family=Silkscreen:wght@400;700&amp;family=Pixelify+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Minecraft Ten';
+            src: url('MinecraftTen.woff2') format('woff2'),
+                 url('MinecraftTen.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         :root {
+            /* --- G9 dark theme: mirrors the actual launcher app's UI --- */
+            --bg: #0c1712;
+            --bg-soft: #101e17;
+            --surface: rgba(255,255,255,0.045);
+            --surface-hover: rgba(255,255,255,0.08);
+            --border: rgba(134,217,107,0.14);
+            --border-strong: rgba(134,217,107,0.34);
+
             --primary: #4caf50;
-            --primary-dark: #2e7d32;
-            --primary-light: #e8f5e9;
-            --g-blue: #1976d2;
-            --n-yellow: #fbc02d;
-            --text-dark: #1b5e20;
-            --glass: rgba(255,255,255,0.55);
-            --glass-border: rgba(255,255,255,0.5);
-            --shadow: 0 8px 32px rgba(31,38,135,0.1);
-            --radius: 20px;
+            --primary-light: #7ed957;
+            --primary-dark: #9be88a;
+            --g-blue: #4fa8e8;
+            --n-yellow: #f0b90b;
+
+            --text: #e7f3e3;
+            --text-dark: #e7f3e3;
+            --text-muted: #93ab99;
+            --text-dim: #62796a;
+
+            --glass: var(--surface);
+            --glass-border: var(--border);
+            --shadow: 0 14px 40px rgba(0,0,0,.45);
+            --radius: 14px;
+            --notch: 9px;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
-        html {
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
-        }
-        /* Force GPU compositing on all blurred/fixed layers to prevent
-           white flash / blank frames during fast scroll on mobile Chrome */
+        html { background: var(--bg); }
         header, .glass-card, .tutorial-item, .os-support, footer, nav#mainNav,
         .lightbox-overlay, .modal-overlay {
             transform: translateZ(0);
@@ -41,47 +60,63 @@
         }
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
-            color: var(--text-dark);
+            background:
+                radial-gradient(ellipse 900px 500px at 15% -10%, rgba(76,175,80,.13), transparent 60%),
+                radial-gradient(ellipse 700px 500px at 100% 20%, rgba(240,185,11,.06), transparent 55%),
+                var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
             overscroll-behavior-y: none;
         }
+        ::selection { background: rgba(76,175,80,.4); color:#fff; }
+        h1,h2,h3 { font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace; letter-spacing:.3px; }
+
         @keyframes fadeInUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
         @keyframes lbZoom { from{transform:scale(.88);opacity:0} to{transform:scale(1);opacity:1} }
         .animate-on-scroll { opacity:0; transform:translateY(30px); transition:opacity .8s ease-out,transform .8s ease-out; }
         .animate-on-scroll.visible { opacity:1; transform:translateY(0); }
 
+        /* Signature stepped/pixel corner — echoes Minecraft block edges without
+           literal textures. Applied to primary buttons & badges. */
+        .pixel-corner {
+            clip-path: polygon(
+                var(--notch) 0, 100% 0, 100% calc(100% - var(--notch)),
+                calc(100% - var(--notch)) 100%, 0 100%, 0 var(--notch)
+            );
+        }
+
         /* HEADER */
         header {
             position:fixed; top:0; width:100%;
-            padding:.9rem 5%;
-            background:rgba(255,255,255,0.28); backdrop-filter:blur(14px);
-            border-bottom:1px solid var(--glass-border); z-index:900;
+            padding:.85rem 5%;
+            background:rgba(12,23,18,0.72); backdrop-filter:blur(14px);
+            border-bottom:1px solid var(--border); z-index:900;
             display:flex; justify-content:space-between; align-items:center;
-            box-shadow:var(--shadow);
+            box-shadow:0 4px 24px rgba(0,0,0,.3);
             transition: transform .4s cubic-bezier(.4,0,.2,1);
         }
         header.header-hidden { transform: translateY(-100%); }
-        .logo { font-size:1.7rem; font-weight:900; letter-spacing:-1px; }
-        .logo .g { color:var(--g-blue); } .logo .n { color:var(--n-yellow); } .logo .t { color:var(--text-dark); }
-        nav ul { list-style:none; display:flex; gap:1.4rem; }
-        nav a { text-decoration:none; color:var(--text-dark); font-weight:600; font-size:.92rem; padding:6px 13px; border-radius:50px; transition:background .25s; }
-        nav a:hover { background:rgba(255,255,255,0.5); }
+        .logo { font-family:'Minecraft Ten','Silkscreen',monospace; font-size:1.35rem; font-weight:700; letter-spacing:0; display:flex; align-items:center; gap:10px; }
+        .logo-cube-img { width:22px; height:22px; object-fit:contain; flex-shrink:0; }
+        .logo .g { color:var(--g-blue); } .logo .n { color:var(--n-yellow); } .logo .t { color:var(--text); font-size:.92rem; }
+        nav ul { list-style:none; display:flex; gap:.3rem; }
+        nav a { text-decoration:none; color:var(--text-muted); font-weight:600; font-size:.86rem; padding:8px 14px; border-radius:8px; transition:all .2s; letter-spacing:.2px; }
+        nav a:hover { background:var(--surface-hover); color:var(--text); }
 
         /* BURGER BUTTON */
         .burger {
             display:none; flex-direction:column; justify-content:center; gap:5px;
             width:40px; height:40px; cursor:pointer; border:none;
-            background:rgba(255,255,255,.4); border-radius:12px; padding:8px;
-            transition:background .25s; border:1px solid var(--glass-border);
+            background:var(--surface); border-radius:10px; padding:8px;
+            transition:background .25s; border:1px solid var(--border);
         }
-        .burger:hover { background:rgba(255,255,255,.65); }
+        .burger:hover { background:var(--surface-hover); }
         .burger span {
             display:block; width:100%; height:2.5px;
-            background:var(--text-dark); border-radius:4px;
+            background:var(--text); border-radius:4px;
             transition:transform .3s ease, opacity .3s ease;
         }
         .burger.open span:nth-child(1) { transform:translateY(7.5px) rotate(45deg); }
@@ -93,9 +128,9 @@
             .burger { display:flex; }
             nav {
                 position:absolute; top:100%; left:0; width:100%;
-                background:rgba(232,245,233,.97); backdrop-filter:blur(16px);
-                border-bottom:1px solid var(--glass-border);
-                box-shadow:0 8px 24px rgba(31,38,135,.12);
+                background:rgba(12,23,18,.97); backdrop-filter:blur(16px);
+                border-bottom:1px solid var(--border);
+                box-shadow:0 8px 24px rgba(0,0,0,.4);
                 display:none; z-index:899;
             }
             nav.open { display:block; animation:fadeInUp .25s ease; }
@@ -103,16 +138,16 @@
             nav ul li { width:100%; }
             nav a {
                 display:block; padding:13px 24px; border-radius:0; font-size:1rem;
-                border-bottom:1px solid rgba(76,175,80,.1);
+                border-bottom:1px solid var(--border);
                 transition:background .2s;
             }
             nav ul li:last-child a { border-bottom:none; }
-            nav a:hover { background:rgba(255,255,255,.7); }
+            nav a:hover { background:var(--surface-hover); }
 
             /* Mobile hero tweaks */
             .hero { padding-top:80px; }
-            .hero h1 { font-size:2.8rem; }
-            .hero-slogan { font-size:1.2rem; }
+            .hero h1 { font-size:1.9rem; }
+            .hero-slogan { font-size:1.1rem; }
             .dl-btn { font-size:.88rem; padding:11px 18px; }
             section { padding:4rem 5%; }
         }
@@ -120,10 +155,10 @@
         /* VERSION BADGE */
         .version-badge {
             display:inline-flex; align-items:center; gap:8px;
-            background:rgba(255,255,255,.38); border:1px solid rgba(76,175,80,.35);
+            background:var(--surface); border:1px solid var(--border);
             border-radius:50px; padding:6px 16px 6px 10px;
             font-size:.82rem; font-weight:600; color:var(--primary-dark);
-            margin-top:.8rem; backdrop-filter:blur(6px);
+            margin-top:.8rem;
         }
         .version-dot {
             width:8px; height:8px; border-radius:50%;
@@ -134,103 +169,187 @@
         }
         @keyframes pulse {
             0%,100% { box-shadow:0 0 0 3px rgba(76,175,80,.25); }
-            50%      { box-shadow:0 0 0 6px rgba(76,175,80,.1); }
+            50%      { box-shadow:0 0 0 6px rgba(76,175,80,.08); }
         }
-        .version-num { font-family:'JetBrains Mono','Courier New',monospace; font-weight:700; color:var(--primary-dark); }
+        .version-num { font-family:'JetBrains Mono','Courier New',monospace; font-weight:700; color:var(--primary-light); }
+
+        /* BETA CALLOUT */
+        .beta-callout { padding:0 5% 5rem; max-width:1200px; margin:0 auto; }
+        .beta-callout-box {
+            display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;
+            background:linear-gradient(120deg, rgba(76,175,80,.1), rgba(240,185,11,.06));
+            border:1px solid var(--border-strong); border-radius:var(--radius);
+            padding:2rem 2.2rem; box-shadow:var(--shadow);
+        }
+        .beta-tag {
+            display:inline-block; font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace;
+            font-size:.75rem; font-weight:700; letter-spacing:1px;
+            background:var(--n-yellow); color:#402d00; padding:3px 11px;
+            border-radius:6px; margin-bottom:.7rem;
+        }
+        .beta-title { font-size:1.25rem; margin-bottom:.5rem; }
+        .beta-desc { color:var(--text-muted); font-size:.92rem; max-width:480px; }
+        .beta-dl-btn {
+            display:inline-flex; align-items:center; gap:9px; flex-shrink:0;
+            background:var(--primary); color:#0c1712; padding:13px 24px;
+            border-radius:8px; font-weight:700; font-size:.92rem; text-decoration:none;
+            transition:all .25s; box-shadow:0 6px 20px rgba(76,175,80,.28);
+        }
+        .beta-dl-btn:hover { background:var(--primary-light); transform:translateY(-2px); }
+        .beta-dl-btn-soon {
+            background:transparent; color:var(--text-dim); border:2px dashed var(--border);
+            box-shadow:none; cursor:not-allowed; pointer-events:none;
+        }
+        .beta-dl-btn-soon:hover { transform:none; }
+        @media(max-width:640px) { .beta-callout-box { flex-direction:column; text-align:center; } .beta-desc { margin:0 auto; } }
 
         /* HERO */
-        .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:90px 20px 0; animation:fadeInUp .9s ease-out; }
-        .hero h1 { font-size:4.5rem; font-weight:900; margin-bottom:1rem; }
-        .hero p { font-size:1.15rem; max-width:580px; margin-bottom:2.5rem; color:#2e7d32; }
-        .download-group { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-bottom:1rem; }
-        .dl-btn { display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:50px; font-size:.97rem; font-weight:700; text-decoration:none; border:none; cursor:pointer; transition:all .3s cubic-bezier(.25,.8,.25,1); font-family:'Outfit',sans-serif; }
-        .dl-btn-primary { background:var(--primary); color:#fff; box-shadow:0 6px 18px rgba(76,175,80,.28); }
-        .dl-btn-primary:hover { background:var(--primary-dark); transform:translateY(-3px) scale(1.02); }
-        .dl-btn-glass { background:rgba(255,255,255,.42); color:var(--text-dark); border:1px solid var(--glass-border); box-shadow:var(--shadow); }
-        .dl-btn-glass:hover { background:rgba(255,255,255,.65); transform:translateY(-2px); }
-        .dl-btn-android { background:rgba(255,255,255,.3); color:#777; border:2px dashed rgba(76,175,80,.4); cursor:not-allowed; opacity:.7; }
-        .cs-tag { font-size:.68rem; background:var(--n-yellow); color:#5a3e00; padding:2px 8px; border-radius:20px; font-weight:700; }
-        .os-support { font-size:.85rem; color:#1b5e20; font-weight:600; background:rgba(255,255,255,.4); padding:5px 16px; border-radius:20px; backdrop-filter:blur(5px); display:inline-flex; align-items:center; gap:6px; }
+        .hero { min-height:92vh; display:flex; align-items:center; padding:110px 5% 40px; animation:fadeInUp .9s ease-out; position:relative; }
+        .hero-inner { display:grid; grid-template-columns:1.15fr 1fr; gap:3rem; align-items:center; max-width:1200px; margin:0 auto; width:100%; }
+        .hero-text { text-align:left; }
+        .hero-h1 { font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace; font-size:2.7rem; font-weight:700; line-height:1.25; margin-bottom:1.2rem; color:var(--text); }
+        .hero-h1-accent { display:inline-block; margin-top:.2rem; }
+        .hero-h1-normal { font-family:'Outfit',sans-serif; font-weight:600; letter-spacing:0; }
+        .section-title-normal { font-family:'Outfit',sans-serif; font-weight:700; letter-spacing:0; }
+        .hero-sub { font-size:1.05rem; max-width:480px; margin-bottom:2rem; color:var(--text-muted); }
+        .hero-visual { display:flex; justify-content:center; align-items:center; }
+        .hero-visual-img { width:100%; max-width:460px; border-radius:14px; border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer; transition:transform .3s ease, border-color .3s ease; }
+        .hero-visual-img:hover { transform:scale(1.02); border-color:var(--border-strong); }
+        @media(max-width:860px) {
+            .hero { min-height:auto; padding-top:100px; }
+            .hero-inner { grid-template-columns:1fr; gap:2.2rem; text-align:center; }
+            .hero-text { text-align:center; }
+            .hero-sub { margin-left:auto; margin-right:auto; }
+            .hero-visual { order:-1; }
+            .hero-visual-img { max-width:320px; }
+        }
+        .hero p { font-size:1.15rem; max-width:580px; margin-bottom:2.5rem; color:var(--text-muted); }
+        .download-group { display:flex; flex-wrap:wrap; align-items:center; gap:16px; justify-content:flex-start; margin-bottom:1.2rem; }
+        .dl-btn-main { transform:none; }
+        @media(max-width:860px) { .download-group { justify-content:center; } }
+        @media(max-width:560px) { .download-group { flex-direction:column; align-items:stretch; } }
+        .dl-btn { display:inline-flex; align-items:center; gap:9px; padding:14px 26px; font-size:.95rem; font-weight:700; text-decoration:none; border:none; cursor:pointer; transition:all .25s cubic-bezier(.25,.8,.25,1); font-family:'Outfit',sans-serif; }
+        .dl-btn-primary { background:var(--primary); color:#0c1712; box-shadow:0 6px 20px rgba(76,175,80,.35); }
+        .dl-btn-primary:hover { background:var(--primary-light); transform:translateY(-3px); }
+        .dl-btn-glass { background:var(--surface); color:var(--text); border:1px solid var(--border-strong); }
+        .dl-btn-glass:hover { background:var(--surface-hover); transform:translateY(-2px); }
+        .dl-btn-android { background:rgba(255,255,255,.02); color:var(--text-dim); border:2px dashed var(--border); cursor:not-allowed; opacity:.75; }
+        .cs-tag { font-size:.68rem; background:var(--n-yellow); color:#402d00; padding:2px 8px; border-radius:6px; font-weight:700; }
+        .os-support { font-size:.85rem; color:var(--text-muted); font-weight:600; background:var(--surface); padding:6px 16px; border-radius:8px; display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border); }
 
         /* SECTIONS */
         section { padding:6rem 5%; max-width:1200px; margin:0 auto; }
-        .section-title { text-align:center; font-size:2.2rem; font-weight:900; margin-bottom:2.5rem; }
-        .glass-card { background:var(--glass); backdrop-filter:blur(16px); border:1px solid var(--glass-border); border-radius:var(--radius); padding:2.2rem; box-shadow:var(--shadow); transition:transform .3s ease; }
-        .glass-card:hover { transform:translateY(-4px); }
-        .glass-card h3 { font-size:1.25rem; margin-bottom:.8rem; color:var(--primary-dark); display:flex; align-items:center; gap:10px; }
+        .section-title { text-align:center; font-size:1.7rem; font-weight:700; margin-bottom:2.5rem; color:var(--text); }
+        .glass-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:2.2rem; box-shadow:var(--shadow); transition:transform .3s ease, border-color .3s ease; }
+        .glass-card:hover { transform:translateY(-4px); border-color:var(--border-strong); }
+        .glass-card h3 { font-size:1.05rem; margin-bottom:.8rem; color:var(--primary-dark); display:flex; align-items:center; gap:10px; font-family:'Outfit',sans-serif; font-weight:800; }
+        .glass-card p { color:var(--text-muted); }
         .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
         .screenshot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:1.5rem; }
 
         /* Screenshots */
-        .screenshot-img { width:100%; border-radius:14px; border:1px solid var(--glass-border); box-shadow:var(--shadow); cursor:pointer; transition:transform .3s ease,box-shadow .3s ease; }
-        .screenshot-img:hover { transform:scale(1.03); box-shadow:0 12px 36px rgba(31,38,135,.18); }
+        .screenshot-img { width:100%; border-radius:10px; border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer; transition:transform .3s ease, border-color .3s ease; }
+        .screenshot-img:hover { transform:scale(1.03); border-color:var(--border-strong); }
 
         /* TUTORIALS */
-        .tutorial-list { display:flex; flex-direction:column; gap:1rem; }
-        .tutorial-item { background:var(--glass); backdrop-filter:blur(12px); border:1px solid var(--glass-border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+        .tutorial-list { display:flex; flex-direction:column; gap:.9rem; }
+        .tutorial-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:border-color .2s; }
+        .tutorial-item.open { border-color:var(--border-strong); }
         .tutorial-header { display:flex; align-items:center; gap:14px; padding:1.1rem 1.4rem; cursor:pointer; transition:background .2s; user-select:none; }
-        .tutorial-header:hover { background:rgba(255,255,255,.35); }
-        .tutorial-num { width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.88rem; flex-shrink:0; }
-        .tutorial-title { font-weight:700; font-size:1rem; flex:1; }
-        .tutorial-arrow { transition:transform .3s; flex-shrink:0; }
-        .tutorial-item.open .tutorial-arrow { transform:rotate(180deg); }
+        .tutorial-header:hover { background:var(--surface-hover); }
+        .tutorial-num { width:32px; height:32px; border-radius:8px; background:rgba(76,175,80,.15); color:var(--primary-light); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; flex-shrink:0; font-family:'Minecraft Ten','Silkscreen',monospace; }
+        .tutorial-title { font-weight:600; font-size:.98rem; flex:1; color:var(--text); }
+        .tutorial-arrow { transition:transform .3s; flex-shrink:0; color:var(--text-dim); }
+        .tutorial-item.open .tutorial-arrow { transform:rotate(180deg); color:var(--primary-light); }
         .tutorial-body { max-height:0; overflow:hidden; transition:max-height .4s ease,padding .3s; padding:0 1.4rem; }
         .tutorial-item.open .tutorial-body { max-height:600px; padding:0 1.4rem 1.4rem; }
-        .tutorial-body p { color:#2e5e30; font-size:.93rem; padding-top:.8rem; border-top:1px solid rgba(76,175,80,.2); }
-        .tutorial-placeholder { color:rgba(46,125,50,.5); font-style:italic; }
+        .tutorial-body p { color:var(--text-muted); font-size:.93rem; padding-top:.8rem; border-top:1px solid var(--border); white-space:pre-line; }
+        .tutorial-placeholder { color:var(--text-dim); font-style:italic; }
 
         /* SUPPORT */
-        .support-tabs { display:flex; gap:9px; margin-bottom:1.6rem; flex-wrap:wrap; }
-        .sup-tab { display:flex; align-items:center; gap:8px; padding:9px 18px; border-radius:50px; font-weight:600; font-size:.88rem; border:1.5px solid var(--glass-border); background:rgba(255,255,255,.3); cursor:pointer; transition:all .25s; font-family:'Outfit',sans-serif; color:var(--text-dark); }
-        .sup-tab:hover:not(:disabled), .sup-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-        .sup-tab:disabled { opacity:.55; cursor:not-allowed; }
-        .cs-badge { font-size:.63rem; background:var(--n-yellow); color:#5a3e00; padding:2px 7px; border-radius:20px; font-weight:700; }
+        .support-tabs { display:flex; gap:8px; margin-bottom:1.6rem; flex-wrap:wrap; }
+        .sup-tab { display:flex; align-items:center; gap:8px; padding:9px 18px; border-radius:8px; font-weight:600; font-size:.86rem; border:1px solid var(--border); background:var(--surface); cursor:pointer; transition:all .2s; font-family:'Outfit',sans-serif; color:var(--text-muted); }
+        .sup-tab:hover:not(:disabled), .sup-tab.active { background:var(--primary); color:#0c1712; border-color:var(--primary); }
+        .sup-tab:disabled { opacity:.45; cursor:not-allowed; }
+        .cs-badge { font-size:.63rem; background:var(--n-yellow); color:#402d00; padding:2px 7px; border-radius:6px; font-weight:700; }
         .support-panel { display:none; }
         .support-panel.active { display:block; animation:fadeInUp .3s ease; }
-        .sup-form-box { background:rgba(255,255,255,.4); border-radius:14px; padding:1.6rem; border:1px solid var(--glass-border); }
-        .sup-form-box p { margin-bottom:1rem; color:#2e5e30; font-size:.93rem; }
+        .sup-form-box { background:var(--surface); border-radius:12px; padding:1.6rem; border:1px solid var(--border); }
+        .sup-form-box p { margin-bottom:1rem; color:var(--text-muted); font-size:.93rem; }
         .sup-links { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
-        .sup-link { display:inline-flex; align-items:center; gap:8px; background:var(--primary); color:#fff; padding:10px 20px; border-radius:50px; font-weight:700; text-decoration:none; font-size:.92rem; transition:all .3s; box-shadow:0 4px 14px rgba(76,175,80,.3); }
-        .sup-link:hover { background:var(--primary-dark); transform:translateY(-2px); }
-        .sup-link-mail { background:rgba(255,255,255,.5)!important; color:var(--text-dark)!important; border:1.5px solid var(--glass-border); box-shadow:var(--shadow)!important; }
-        .sup-link-mail:hover { background:rgba(255,255,255,.8)!important; transform:translateY(-2px); }
+        .sup-link { display:inline-flex; align-items:center; gap:8px; background:var(--primary); color:#0c1712; padding:10px 20px; border-radius:8px; font-weight:700; text-decoration:none; font-size:.92rem; transition:all .25s; box-shadow:0 4px 14px rgba(76,175,80,.25); }
+        .sup-link:hover { background:var(--primary-light); transform:translateY(-2px); }
+        .sup-link-mail { background:var(--surface)!important; color:var(--text)!important; border:1px solid var(--border-strong); box-shadow:none!important; }
+        .sup-link-mail:hover { background:var(--surface-hover)!important; transform:translateY(-2px); }
 
         /* LIGHTBOX */
-        .lightbox-overlay { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.82); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:20px; }
+        .lightbox-overlay { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.88); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:20px; }
         .lightbox-overlay.open { display:flex; animation:fadeInUp .25s ease; }
-        .lightbox-img { max-width:90vw; max-height:88vh; border-radius:16px; box-shadow:0 24px 64px rgba(0,0,0,.5); animation:lbZoom .25s cubic-bezier(.25,.8,.25,1); }
-        .lightbox-close { position:fixed; top:20px; right:24px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); color:#fff; width:44px; height:44px; border-radius:50%; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
-        .lightbox-close:hover { background:rgba(255,255,255,.3); }
+        .lightbox-img { max-width:90vw; max-height:88vh; border-radius:10px; box-shadow:0 24px 64px rgba(0,0,0,.6); animation:lbZoom .25s cubic-bezier(.25,.8,.25,1); }
+        .lightbox-close { position:fixed; top:20px; right:24px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#fff; width:44px; height:44px; border-radius:50%; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+        .lightbox-close:hover { background:rgba(255,255,255,.18); }
 
         /* PATCHER MODAL */
-        .modal-overlay { display:none; position:fixed; inset:0; z-index:1800; background:rgba(0,0,0,.6); backdrop-filter:blur(6px); justify-content:center; align-items:center; padding:20px; }
+        .modal-overlay { display:none; position:fixed; inset:0; z-index:1800; background:rgba(0,0,0,.7); backdrop-filter:blur(6px); justify-content:center; align-items:center; padding:20px; }
         .modal-overlay.open { display:flex; animation:fadeInUp .25s ease; }
-        .modal-box { background:linear-gradient(145deg,#e8f5e9,#c8e6c9); border:1px solid var(--glass-border); border-radius:24px; padding:2.4rem; max-width:560px; width:100%; box-shadow:0 24px 64px rgba(31,38,135,.22); position:relative; }
-        .modal-box h3 { font-size:1.3rem; font-weight:900; margin-bottom:1rem; color:var(--primary-dark); display:flex; align-items:center; gap:10px; }
-        .modal-close { position:absolute; top:14px; right:14px; background:rgba(255,255,255,.5); border:1px solid var(--glass-border); width:34px; height:34px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:background .2s; color:var(--text-dark); }
-        .modal-close:hover { background:rgba(255,255,255,.85); }
-        .modal-content-box { background:rgba(255,255,255,.5); border-radius:14px; padding:1.2rem 1.4rem; margin-bottom:1.4rem; max-height:250px; overflow-y:auto; border:1px solid var(--glass-border); font-size:.91rem; color:#2e5e30; }
+        .modal-box { background:var(--bg-soft); border:1px solid var(--border-strong); border-radius:18px; padding:2.4rem; max-width:560px; width:100%; box-shadow:0 24px 64px rgba(0,0,0,.5); position:relative; }
+        .modal-box h3 { font-size:1.05rem; font-weight:800; margin-bottom:1rem; color:var(--primary-dark); display:flex; align-items:center; gap:10px; font-family:'Outfit',sans-serif; }
+        .modal-close { position:absolute; top:14px; right:14px; background:var(--surface); border:1px solid var(--border); width:34px; height:34px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:background .2s; color:var(--text); }
+        .modal-close:hover { background:var(--surface-hover); }
+        .modal-content-box { background:rgba(0,0,0,.2); border-radius:10px; padding:1.2rem 1.4rem; margin-bottom:1.4rem; max-height:250px; overflow-y:auto; border:1px solid var(--border); font-size:.91rem; color:var(--text-muted); }
         .modal-content-box h4 { font-size:.98rem; font-weight:700; margin-bottom:.6rem; color:var(--primary-dark); }
-        .modal-content-box p { margin-bottom:.55rem; }
+        .modal-content-box p { margin-bottom:.55rem; white-space:pre-line; }
         .modal-agree { display:flex; align-items:flex-start; gap:12px; margin-bottom:1.4rem; }
         .modal-agree input[type=checkbox] { width:20px; height:20px; accent-color:var(--primary); flex-shrink:0; margin-top:2px; cursor:pointer; }
-        .modal-agree label { font-size:.91rem; cursor:pointer; line-height:1.4; }
-        .modal-dl-btn { display:inline-flex; align-items:center; gap:9px; background:var(--primary); color:#fff; padding:11px 24px; border-radius:50px; font-weight:700; font-size:.95rem; border:none; cursor:pointer; transition:all .3s; font-family:'Outfit',sans-serif; text-decoration:none; opacity:.4; pointer-events:none; box-shadow:0 6px 18px rgba(76,175,80,.3); }
+        .modal-agree label { font-size:.91rem; cursor:pointer; line-height:1.4; color:var(--text-muted); }
+        .modal-dl-btn { display:inline-flex; align-items:center; gap:9px; background:var(--primary); color:#0c1712; padding:11px 24px; border-radius:8px; font-weight:700; font-size:.95rem; border:none; cursor:pointer; transition:all .25s; font-family:'Outfit',sans-serif; text-decoration:none; opacity:.35; pointer-events:none; box-shadow:0 6px 18px rgba(76,175,80,.25); }
         .modal-dl-btn.enabled { opacity:1; pointer-events:all; }
-        .modal-dl-btn.enabled:hover { background:var(--primary-dark); transform:translateY(-2px); }
+        .modal-dl-btn.enabled:hover { background:var(--primary-light); transform:translateY(-2px); }
 
+        /* OS PICKER MODAL */
+        .os-modal-box { max-width:640px; }
+        .os-view { display:block; }
+        .os-modal-grid { display:grid; grid-template-columns:1.3fr 1fr; gap:1.6rem; align-items:stretch; }
+        @media(max-width:560px) { .os-modal-grid { grid-template-columns:1fr; } }
+        .os-modal-list { display:flex; flex-direction:column; gap:.6rem; }
+        .os-row {
+            display:flex; align-items:center; gap:12px; width:100%;
+            background:var(--surface); border:1px solid var(--border);
+            border-radius:10px; padding:12px 14px; cursor:pointer;
+            font-family:'Outfit',sans-serif; transition:all .2s;
+        }
+        .os-row:hover { background:var(--surface-hover); border-color:var(--border-strong); transform:translateX(2px); }
+        .os-row-label { flex:1; text-align:left; font-weight:600; font-size:.93rem; color:var(--text); }
+        .os-row-arrow { color:var(--text-dim); flex-shrink:0; }
+        .os-modal-brand {
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            text-align:center; gap:.5rem; background:rgba(76,175,80,.06);
+            border:1px solid var(--border); border-radius:12px; padding:1.4rem 1rem;
+        }
+        .os-brand-img { width:56px; height:56px; object-fit:contain; margin-bottom:.3rem; }
+        .os-brand-title { font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace; font-size:1.05rem; font-weight:700; color:var(--text); }
+        .os-brand-slogan { font-size:.82rem; color:var(--text-muted); font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace; }
+        .os-back-btn {
+            display:inline-flex; align-items:center; gap:6px; background:none; border:none;
+            color:var(--text-muted); font-family:'Outfit',sans-serif; font-weight:600;
+            font-size:.85rem; cursor:pointer; padding:0; margin-bottom:1rem; transition:color .2s;
+        }
+        .os-back-btn:hover { color:var(--text); }
+        .os-soon-box { text-align:center; padding:2rem 1rem; }
+        .os-soon-box h4 { font-size:1.1rem; margin:.8rem 0 .5rem; color:var(--text); }
+        .os-soon-box p { color:var(--text-muted); font-size:.92rem; }
 
         /* COFFEE / SUPPORT BUTTON */
         .coffee-btn {
             display:inline-flex; align-items:center; gap:7px;
-            background:linear-gradient(135deg,#fbc02d,#f9a825);
-            color:#5a3e00; border:none; border-radius:50px;
-            padding:9px 18px; font-weight:700; font-size:.88rem;
+            background:var(--n-yellow);
+            color:#402d00; border:none; border-radius:8px;
+            padding:9px 18px; font-weight:700; font-size:.86rem;
             cursor:pointer; font-family:'Outfit',sans-serif;
-            box-shadow:0 4px 14px rgba(251,192,45,.4);
+            box-shadow:0 4px 14px rgba(240,185,11,.28);
             transition:all .25s; margin-left:10px;
         }
-        .coffee-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(251,192,45,.55); }
+        .coffee-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(240,185,11,.4); filter:brightness(1.08); }
         @media(max-width:768px) {
             .coffee-btn { padding:8px 14px; font-size:.8rem; margin-left:6px; }
         }
@@ -240,561 +359,675 @@
 
         /* CARD MODAL */
         .card-box {
-            background:rgba(255,255,255,.55); border:1.5px dashed rgba(76,175,80,.4);
-            border-radius:14px; padding:1.2rem 1.4rem; text-align:center; margin-bottom:1.2rem;
+            background:rgba(0,0,0,.22); border:1.5px dashed var(--border-strong);
+            border-radius:10px; padding:1.2rem 1.4rem; text-align:center; margin-bottom:1.2rem;
         }
-        .card-number { font-family:'JetBrains Mono','Courier New',monospace; font-size:1.25rem; font-weight:700; color:var(--primary-dark); letter-spacing:1px; display:block; margin-bottom:.5rem; word-break:break-all; }
-        .card-bank-label { font-size:.82rem; color:#2e5e30; font-weight:600; }
+        .card-number { font-family:'JetBrains Mono','Courier New',monospace; font-size:1.2rem; font-weight:700; color:var(--primary-light); letter-spacing:1px; display:block; margin-bottom:.5rem; word-break:break-all; }
+        .card-bank-label { font-size:.82rem; color:var(--text-muted); font-weight:600; }
         .copy-card-btn {
             display:inline-flex; align-items:center; gap:8px;
-            background:var(--primary); color:#fff; padding:11px 22px;
-            border-radius:50px; font-weight:700; font-size:.93rem; border:none;
-            cursor:pointer; transition:all .3s; font-family:'Outfit',sans-serif;
-            box-shadow:0 6px 18px rgba(76,175,80,.3); width:100%; justify-content:center;
+            background:var(--primary); color:#0c1712; padding:11px 22px;
+            border-radius:8px; font-weight:700; font-size:.93rem; border:none;
+            cursor:pointer; transition:all .25s; font-family:'Outfit',sans-serif;
+            box-shadow:0 6px 18px rgba(76,175,80,.25); width:100%; justify-content:center;
         }
-        .copy-card-btn:hover { background:var(--primary-dark); transform:translateY(-2px); }
-        .copy-card-btn.copied { background:#2e7d32; }
+        .copy-card-btn:hover { background:var(--primary-light); transform:translateY(-2px); }
+        .copy-card-btn.copied { background:#2e7d32; color:#fff; }
 
         /* HERO SLOGAN */
-        .hero-slogan { font-size:1.55rem; font-weight:700; color:var(--primary-dark); margin-bottom:.4rem; letter-spacing:-.3px; }
-        .hero-sub { font-size:1rem; max-width:520px; margin-bottom:2.2rem; color:#2e7d32; }
+        .hero-slogan { font-size:1.4rem; font-weight:700; color:var(--primary-light); margin-bottom:.5rem; letter-spacing:-.2px; font-family:'Minecraft Ten','Pixelify Sans','Silkscreen',monospace; }
+        .hero-sub { font-size:1rem; max-width:520px; margin-bottom:2.2rem; color:var(--text-muted); }
 
         /* ABOUT MINECRAFT section */
         .about-mc { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center; }
         @media(max-width:700px){ .about-mc{grid-template-columns:1fr;} }
-        .mc-pixel-art { width:100%; max-width:340px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 36px rgba(31,38,135,.15); display:block; }
+        .about-mc p { color:var(--text-muted); }
+        .mc-pixel-art { width:100%; max-width:340px; margin:0 auto; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); display:block; border:1px solid var(--border); background:#0c1712; }
+        .mc-pixel-art img { width:100%; height:100%; object-fit:cover; display:block; }
 
-        /* ADDONS PAGE */
-        .addons-section { display:none; }
-        .addons-section.visible-section { display:block; animation:fadeInUp .45s ease; }
-        .addons-page {
-            display:none; min-height:100vh; padding:7rem 5% 4rem;
-            max-width:1200px; margin:0 auto;
-        }
+        /* ADDONS / NEWS PAGE */
+        .addons-page { display:none; max-width:1200px; margin:0 auto; padding:110px 5% 5rem; }
         .addons-page.active { display:block; animation:fadeInUp .4s ease; }
         .addons-back-btn {
-            display:inline-flex; align-items:center; gap:8px;
-            background:rgba(255,255,255,.45); border:1px solid var(--glass-border);
-            border-radius:50px; padding:8px 18px; font-weight:700; font-size:.9rem;
-            color:var(--text-dark); cursor:pointer; margin-bottom:2rem;
-            transition:background .25s; text-decoration:none;
+            display:inline-flex; align-items:center; gap:8px; background:var(--surface);
+            border:1px solid var(--border); color:var(--text); padding:9px 18px;
+            border-radius:8px; font-weight:600; font-size:.88rem; cursor:pointer;
+            font-family:'Outfit',sans-serif; margin-bottom:1.6rem; transition:all .2s;
         }
-        .addons-back-btn:hover { background:rgba(255,255,255,.7); }
-        .addons-tabs { display:flex; gap:10px; margin-bottom:2rem; flex-wrap:wrap; }
-        .addons-tab {
-            display:flex; align-items:center; gap:8px;
-            padding:10px 22px; border-radius:50px; font-weight:700; font-size:.93rem;
-            border:1.5px solid var(--glass-border); background:rgba(255,255,255,.3);
-            cursor:pointer; transition:all .25s; font-family:'Outfit',sans-serif;
-            color:var(--text-dark);
-        }
-        .addons-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-        .addons-tab:hover:not(.active) { background:rgba(255,255,255,.55); }
+        .addons-back-btn:hover { background:var(--surface-hover); border-color:var(--border-strong); }
+        .addons-tabs { display:flex; gap:8px; margin-bottom:1.8rem; flex-wrap:wrap; }
+        .addons-tab { display:flex; align-items:center; gap:8px; padding:9px 18px; border-radius:8px; font-weight:600; font-size:.86rem; border:1px solid var(--border); background:var(--surface); cursor:pointer; transition:all .2s; font-family:'Outfit',sans-serif; color:var(--text-muted); }
+        .addons-tab:hover, .addons-tab.active { background:var(--primary); color:#0c1712; border-color:var(--primary); }
         .addons-panel { display:none; }
         .addons-panel.active { display:block; animation:fadeInUp .3s ease; }
         .addons-grid {
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-            gap:1.4rem;
+            gap:1.2rem;
         }
         .addon-card {
-            background:var(--glass); backdrop-filter:blur(16px);
-            border:1px solid var(--glass-border); border-radius:var(--radius);
+            background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
             padding:1.6rem 1.4rem; box-shadow:var(--shadow);
-            transition:transform .3s ease; display:flex; flex-direction:column; gap:.7rem;
+            transition:transform .3s ease, border-color .3s ease; display:flex; flex-direction:column; gap:.7rem;
         }
-        .addon-card:hover { transform:translateY(-4px); }
+        .addon-card:hover { transform:translateY(-4px); border-color:var(--border-strong); }
         .addon-card-icon {
-            width:48px; height:48px; border-radius:13px;
-            background:var(--primary-light);
+            width:44px; height:44px; border-radius:10px;
+            background:rgba(76,175,80,.14);
             display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .addon-card h3 { font-size:1.05rem; font-weight:800; color:var(--primary-dark); }
-        .addon-card p { font-size:.86rem; color:#2e5e30; flex:1; line-height:1.5; }
+        .addon-card h3 { font-size:.98rem; font-weight:800; color:var(--primary-dark); font-family:'Outfit',sans-serif; }
+        .addon-card p { font-size:.86rem; color:var(--text-muted); flex:1; line-height:1.5; }
         .addon-card .addon-meta { display:flex; align-items:center; gap:8px; margin-top:.3rem; flex-wrap:wrap; }
-        .addon-ver { font-size:.72rem; background:rgba(76,175,80,.15); color:var(--primary-dark); padding:2px 9px; border-radius:20px; font-weight:700; }
-        .addon-soon { font-size:.72rem; background:var(--n-yellow); color:#5a3e00; padding:2px 9px; border-radius:20px; font-weight:700; }
+        .addon-ver { font-size:.72rem; background:rgba(76,175,80,.14); color:var(--primary-light); padding:2px 9px; border-radius:6px; font-weight:700; }
+        .addon-soon { font-size:.72rem; background:var(--n-yellow); color:#402d00; padding:2px 9px; border-radius:6px; font-weight:700; width:fit-content; }
         .addon-dl-btn {
             display:inline-flex; align-items:center; gap:6px;
-            background:var(--primary); color:#fff; padding:7px 16px;
-            border-radius:50px; font-size:.82rem; font-weight:700;
-            text-decoration:none; transition:all .25s; margin-top:.2rem; align-self:flex-start;
-            box-shadow:0 4px 12px rgba(76,175,80,.25);
+            background:var(--primary); color:#0c1712; padding:7px 16px;
+            border-radius:8px; font-size:.82rem; font-weight:700;
+            text-decoration:none; transition:all .2s; margin-top:.2rem; align-self:flex-start;
+            box-shadow:0 4px 12px rgba(76,175,80,.22);
         }
-        .addon-dl-btn:hover { background:var(--primary-dark); transform:translateY(-1px); }
-        .addon-dl-btn.soon-btn { background:rgba(255,255,255,.4); color:#999; border:1.5px dashed rgba(76,175,80,.4); box-shadow:none; cursor:not-allowed; pointer-events:none; }
+        .addon-dl-btn:hover { background:var(--primary-light); transform:translateY(-1px); }
+        .addon-dl-btn.soon-btn { background:transparent; color:var(--text-dim); border:1.5px dashed var(--border); box-shadow:none; cursor:not-allowed; pointer-events:none; }
 
-        .news-list { display:flex; flex-direction:column; gap:1.2rem; }
+        .news-list { display:flex; flex-direction:column; gap:1.1rem; }
         .news-card {
-            background:var(--glass); backdrop-filter:blur(16px);
-            border:1px solid var(--glass-border); border-radius:var(--radius);
+            background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
             padding:1.6rem 1.8rem; box-shadow:var(--shadow);
-            position:relative;
+            position:relative; transition:border-color .2s;
         }
+        .news-card:hover { border-color:var(--border-strong); }
         .news-card-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.5rem; }
-        .news-card h3 { font-size:1.15rem; font-weight:800; color:var(--primary-dark); }
-        .news-date { font-size:.82rem; color:#5a8a5c; font-weight:600; white-space:nowrap; }
-        .news-card p { font-size:.92rem; color:#2e5e30; line-height:1.6; }
+        .news-card h3 { font-size:1rem; font-weight:800; color:var(--primary-dark); font-family:'Outfit',sans-serif; display:flex; align-items:center; }
+        .news-date { font-size:.8rem; color:var(--text-dim); font-weight:600; white-space:nowrap; font-family:'JetBrains Mono','Courier New',monospace; }
+        .news-card p { font-size:.9rem; color:var(--text-muted); line-height:1.65; }
         .news-badge {
-            display:inline-block; font-size:.72rem; background:var(--primary);
-            color:#fff; padding:3px 12px; border-radius:20px; font-weight:700;
+            display:inline-block; font-size:.7rem; background:var(--primary);
+            color:#0c1712; padding:3px 12px; border-radius:6px; font-weight:700;
             margin-bottom:.6rem;
         }
         .mc-block-icon {
-            display:inline-block; width:19px; height:19px; border-radius:4px;
+            display:inline-block; width:19px; height:19px; border-radius:3px;
             background:
-                radial-gradient(circle at 28% 78%, rgba(0,0,0,.2) 0 16%, transparent 17%),
-                radial-gradient(circle at 68% 60%, rgba(0,0,0,.16) 0 13%, transparent 14%),
-                radial-gradient(circle at 45% 90%, rgba(0,0,0,.14) 0 11%, transparent 12%),
+                radial-gradient(circle at 28% 78%, rgba(0,0,0,.25) 0 16%, transparent 17%),
+                radial-gradient(circle at 68% 60%, rgba(0,0,0,.2) 0 13%, transparent 14%),
+                radial-gradient(circle at 45% 90%, rgba(0,0,0,.18) 0 11%, transparent 12%),
                 linear-gradient(to bottom, #6a994e 0 34%, #8b5a2b 34% 100%);
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,.18);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
             vertical-align: -4px;
             margin-right: 7px;
             flex-shrink: 0;
         }
 
         /* FOOTER */
-        footer { text-align:center; padding:3.5rem 20px; background:rgba(255,255,255,.2); backdrop-filter:blur(10px); border-top:1px solid var(--glass-border); margin-top:4rem; }
-        .tg-btn { background:#24A1DE; color:#fff; padding:11px 22px; border-radius:50px; text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:8px; transition:all .3s; box-shadow:0 4px 15px rgba(36,161,222,.3); }
-        .tg-btn:hover { background:#1d8ec4; transform:scale(1.05); }
+        footer { text-align:center; padding:3.5rem 20px; background:var(--bg-soft); border-top:1px solid var(--border); margin-top:4rem; }
+        footer h3 { font-family:'Outfit',sans-serif; font-weight:800; }
+        .tg-btn { background:#24A1DE; color:#fff; padding:11px 22px; border-radius:8px; text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:8px; transition:all .25s; box-shadow:0 4px 15px rgba(36,161,222,.25); }
+        .tg-btn:hover { background:#1d8ec4; transform:translateY(-2px); }
         .footer-tg-group { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:1.5rem; }
-        .copyright { color:#2e7d32; font-size:.88rem; }
+        .copyright { color:var(--text-dim); font-size:.85rem; }
 
         .icon { flex-shrink:0; }
 
-        /* Reduce blur cost on mobile — heavy backdrop-filter across many
-           stacked layers causes Android Chrome to blank/whiten the screen
-           for a frame or two during fast scroll. Lighter blur = smoother scroll. */
         @media (max-width: 768px) {
             header { backdrop-filter: blur(8px); }
             nav#mainNav { backdrop-filter: blur(8px); }
-            .glass-card { backdrop-filter: blur(8px); }
-            .tutorial-item { backdrop-filter: blur(6px); }
-            .os-support { backdrop-filter: blur(3px); }
-            footer { backdrop-filter: blur(6px); }
         }
     </style>
 </head>
 <body>
-
-
 <!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+<button class="lightbox-close" onclick="closeLightbox()">✕</button>
+<img alt="" class="lightbox-img" id="lightboxImg" onclick="event.stopPropagation()" src=""/>
+</div>
+<!-- OS PICKER / DOWNLOAD MODAL -->
+<div class="modal-overlay" id="osModal">
+<div class="modal-box os-modal-box">
+<button class="modal-close" onclick="closeOsModal()">✕</button>
+
+<!-- PICKER VIEW -->
+<div class="os-view" id="osView-picker">
+<div class="os-modal-grid">
+<div class="os-modal-list">
+<h3 style="margin-bottom:1rem;">Обери свою систему</h3>
+<button class="os-row" onclick="showOsView('win1011')">
+<svg class="icon" fill="none" height="20" stroke="#4fa8e8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+<span class="os-row-label">Windows 10 / 11</span>
+<svg class="os-row-arrow" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+</button>
+<button class="os-row" onclick="showOsView('win78')">
+<svg class="icon" fill="none" height="20" stroke="#4fa8e8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+<span class="os-row-label">Windows 7 / 8</span>
+<svg class="os-row-arrow" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+</button>
+<button class="os-row" onclick="showOsView('android')">
+<svg class="icon" fill="none" height="20" stroke="var(--text-dim)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M17 2H7L2 12l5 10h10l5-10z"></path><line x1="12" x2="12" y1="6" y2="6.01"></line><line x1="12" x2="12" y1="12" y2="16"></line></svg>
+<span class="os-row-label">Android</span>
+<span class="cs-tag">SOON</span>
+</button>
+<button class="os-row" onclick="showOsView('linux')">
+<svg class="icon" fill="none" height="20" stroke="var(--text-dim)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+<span class="os-row-label">Linux</span>
+<span class="cs-tag">SOON</span>
+</button>
+</div>
+<div class="os-modal-brand">
+<img alt="G9" class="os-brand-img" src="G9Logo.png"/>
+<div class="os-brand-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> LAUNCHER</div>
+<div class="os-brand-slogan">Твій шлях до Minecraft</div>
+</div>
+</div>
 </div>
 
-<!-- PATCHER MODAL -->
-<div class="modal-overlay" id="patcherModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal('patcherModal')">&#x2715;</button>
-        <h3>
-            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+<!-- WINDOWS 10/11 VIEW -->
+<div class="os-view" id="osView-win1011" style="display:none">
+<button class="os-back-btn" onclick="showOsView('picker')">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад
+        </button>
+<h3>
+<svg class="icon" fill="none" height="20" stroke="#1976d2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+            Завантаження для Windows 10 / 11
+        </h3>
+<div class="modal-content-box">
+<h4>Коротка інструкція</h4>
+<p>Крок 1: Завантаж архів з <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher за посиланням нижче та розпакуй його у будь-яку зручну папку.</p>
+<p>Крок 2: Запусти <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher.exe. Windows Defender може показати попередження — просто натисни "Докладніше" → "Виконати у будь-якому разі" (це стандартна поведінка для нових програм без цифрового підпису).</p>
+<p>Крок 3: Обери версію Minecraft, яку хочеш встановити, та натисни "Грати". Лаунчер сам завантажить потрібні файли.</p>
+<p>Переконайся, що ти ознайомився з інструкцією, перш ніж переходити до завантаження.</p>
+</div>
+<div class="modal-agree">
+<input id="win1011Agree" onchange="toggleOsBtn('win1011')" type="checkbox"/>
+<label for="win1011Agree">Я ознайомився з інструкцією і розумію, як встановити та запустити <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</label>
+</div>
+<a class="modal-dl-btn" href="https://drive.google.com/uc?id=1tauGd4hVk18zGNS6IrsZrjIbgltXx0_F" id="win1011DlBtn" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+            Завантажити для Windows 10 / 11
+        </a>
+</div>
+
+<!-- WINDOWS 7/8 (PATCHER) VIEW -->
+<div class="os-view" id="osView-win78" style="display:none">
+<button class="os-back-btn" onclick="showOsView('picker')">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад
+        </button>
+<h3>
+<svg class="icon" fill="none" height="20" stroke="#1976d2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
             Перед завантаженням — прочитай туторіал
         </h3>
-        <div class="modal-content-box">
-            <h4>Туторіал для встановлення патчера для Windows 7 / 8</h4>
-            <p>ІНСТРУКЦІЯ.</p>
-            <p>Крок 1: Завантаження та розпакування
+<div class="modal-content-box">
+<h4>Туторіал для встановлення патчера для Windows 7 / 8</h4>
+<p>ІНСТРУКЦІЯ.</p>
+<p>Крок 1: Завантаження та розпакування
 Перейдіть за посиланням на GitHub та завантажте останній реліз патчера (файл .zip). Розпакуйте вміст архіву у будь-яку зручну папку на вашому комп'ютері.</p>
-            <p>Крок 2: Встановлення компонентів
+<p>Крок 2: Встановлення компонентів
 Запустіть файл KexSetup.exe від імені адміністратора. У вікні, що з'явиться, натисніть кнопку "Install". Дочекайтеся завершення процесу — це додасть необхідні бібліотеки у вашу систему Windows 7 або 8 для запуску сучасних програм.</p>
-            <p>Крок 3: Налаштування G9 Launcher
-Після встановлення патчера натисніть правою кнопкою миші на ярлик або .exe файл G9 Launcher. Оберіть "Властивості" (Properties), перейдіть у вкладку "VxKex"</p>
-            <p>Крок 4: Активація режиму сумісності
+<p>Крок 3: Налаштування <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher
+Після встановлення патчера натисніть правою кнопкою миші на ярлик або .exe файл <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Оберіть "Властивості" (Properties), перейдіть у вкладку "VxKex"</p>
+<p>Крок 4: Активація режиму сумісності
 У вкладці VxKex поставте галочку навпроти "Enable VxKex for this program". У випадаючому списку виберіть "Windows 10" або "Windows 11". Натисніть "Apply" (Застосувати).</p>
-            <p>Крок 5: Запуск
+<p>Крок 5: Запуск
 Тепер просто запускайте лаунчер як зазвичай. Патчер автоматично "підмінить" версію системи для програми, дозволяючи їй працювати без помилок про несумісність.</p>
-            <p>Переконайся, що ти виконав кожен крок правильно, перш ніж переходити до завантаження.</p>
-        </div>
-        <div class="modal-agree">
-            <input type="checkbox" id="patcherAgree" onchange="togglePatcherBtn()">
-            <label for="patcherAgree">Я ознайомився з туторіалом і розумію, як встановити патчер і приймаю на себе усі ризики</label>
-        </div>
-        <a href="https://github.com/YuZhouRen86/VxKex-NEXT/releases" id="patcherDlBtn" class="modal-dl-btn" target="_blank">
-            <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+<p>Переконайся, що ти виконав кожен крок правильно, перш ніж переходити до завантаження.</p>
+</div>
+<div class="modal-agree">
+<input id="win78Agree" onchange="toggleOsBtn('win78')" type="checkbox"/>
+<label for="win78Agree">Я ознайомився з туторіалом і розумію, як встановити патчер і приймаю на себе усі ризики</label>
+</div>
+<a class="modal-dl-btn" href="https://github.com/YuZhouRen86/VxKex-NEXT/releases" id="win78DlBtn" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
             Завантажити патчер
         </a>
-    </div>
 </div>
 
+<!-- ANDROID SOON VIEW -->
+<div class="os-view" id="osView-android" style="display:none">
+<button class="os-back-btn" onclick="showOsView('picker')">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад
+        </button>
+<div class="os-soon-box">
+<svg fill="none" height="34" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="34"><path d="M17 2H7L2 12l5 10h10l5-10z"></path><line x1="12" x2="12" y1="6" y2="6.01"></line><line x1="12" x2="12" y1="12" y2="16"></line></svg>
+<h4>Android-версія в розробці</h4>
+<p>Ми вже працюємо над версією для Android. Слідкуй за розділом "Новини", щоб не пропустити реліз!</p>
+</div>
+</div>
+
+<!-- LINUX SOON VIEW -->
+<div class="os-view" id="osView-linux" style="display:none">
+<button class="os-back-btn" onclick="showOsView('picker')">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад
+        </button>
+<div class="os-soon-box">
+<svg fill="none" height="34" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="34"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+<h4>Linux-версія в розробці</h4>
+<p>Ми вже працюємо над версією для Linux. Слідкуй за розділом "Новини", щоб не пропустити реліз!</p>
+</div>
+</div>
+
+</div>
+</div>
 <!-- COFFEE / SUPPORT MODAL -->
 <div class="modal-overlay" id="coffeeModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal('coffeeModal')">&#x2715;</button>
-        <h3>
-            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbc02d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
-            Підтримати G9 Studios
+<div class="modal-box">
+<button class="modal-close" onclick="closeModal('coffeeModal')">✕</button>
+<h3>
+<svg class="icon" fill="none" height="20" stroke="#fbc02d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"></path><line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line></svg>
+<span>Підтримати <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios</span>
         </h3>
-        <div class="modal-content-box">
-            <p>Розробка G9 Launcher займає багато часу та ресурсів. Якщо тобі подобається проєкт і хочеш подякувати розробникам — можеш закинути будь-яку суму на картку нижче. Кожен донат допомагає нам випускати оновлення швидше!</p>
-        </div>
-        <div class="card-box">
-            <span class="card-number" id="cardNumber">5168 7451 8019 3085</span>
-            <span class="card-bank-label">Картка ПриватБанк</span>
-        </div>
-        <button class="copy-card-btn" id="copyCardBtn" onclick="copyCardNumber()">
-            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span id="copyCardBtnText">Скопіювати номер картки</span>
-        </button>
-    </div>
+<div class="modal-content-box">
+<p>Розробка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher займає багато часу та ресурсів. Якщо тобі подобається проєкт і хочеш подякувати розробникам — можеш закинути будь-яку суму на картку нижче. Кожен донат допомагає нам випускати оновлення швидше!</p>
 </div>
-
+<div class="card-box">
+<span class="card-number" id="cardNumber">5168 7451 8019 3085</span>
+<span class="card-bank-label">Картка ПриватБанк</span>
+</div>
+<button class="copy-card-btn" id="copyCardBtn" onclick="copyCardNumber()">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><rect height="13" rx="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span id="copyCardBtnText">Скопіювати номер картки</span>
+</button>
+</div>
+</div>
+<!-- BETA DOWNLOAD WARNING MODAL -->
+<div class="modal-overlay" id="betaModal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeBetaModal()">✕</button>
+<h3>
+<svg class="icon" fill="none" height="20" stroke="#f0b90b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+            Увага — тестова BETA-версія
+        </h3>
+<div class="modal-content-box">
+<h4>Перед завантаженням прочитай</h4>
+<p><span class="beta-tag" style="margin-bottom:0;">BETA</span></p>
+<p>Це рання тестова збірка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Вона може містити неперевірені функції, помилки, збої в роботі лаунчера або гри, а також бути нестабільною порівняно зі стабільною версією.</p>
+<p>Встановлюючи та використовуючи BETA-версію, ти робиш це на власний ризик. Уся відповідальність за можливі наслідки використання (втрата даних, збереження, конфлікти з модами тощо) лежить на користувачі, який завантажує програму.</p>
+<p>Команда <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios докладає зусиль, щоб BETA працювала стабільно, але не гарантує повну відсутність багів. Якщо знайдеш проблему — будь ласка, повідом у розділі "Підтримка".</p>
+</div>
+<!-- Agreement flow — currently hidden until a real BETA download link is ready. Keep markup intact, just unhide (remove style) to re-enable. -->
+<div style="display:none;">
+<div class="modal-agree">
+<input id="betaAgree" onchange="toggleOsBtn('beta')" type="checkbox"/>
+<label for="betaAgree">Я розумію ризики використання BETA-версії та приймаю всю відповідальність за наслідки на себе</label>
+</div>
+<a class="modal-dl-btn" href="#" id="betaDlBtn" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+            Завантажити BETA
+        </a>
+</div>
+<div class="os-soon-box" style="padding-top:.5rem;">
+<svg fill="none" height="30" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="30"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<h4>Скоро</h4>
+<p>Завантаження BETA-версії буде доступне найближчим часом. Слідкуй за розділом "Новини"!</p>
+</div>
+</div>
+</div>
 <!-- HEADER -->
 <header>
-    <div class="logo" onclick="goHome()" style="cursor:pointer;"><span class="g">G</span><span class="n">9</span> <span class="t">Launcher</span></div>
-    <nav id="mainNav">
-        <ul>
-            <li><a href="#features" onclick="goToSection(event,'features')">Можливості</a></li>
-            <li><a href="#tutorials" onclick="goToSection(event,'tutorials')">Гайди</a></li>
-            <li><a href="#support" onclick="goToSection(event,'support')">Підтримка</a></li>
-            <li><a href="#" onclick="showNews();closeNav();return false;">Новини</a></li>
-            <li><a href="#" onclick="showAddons();closeNav();return false;">Доповнення</a></li>
-        </ul>
-    </nav>
-    <button class="coffee-btn" onclick="openModal('coffeeModal')">
-        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
-        <span class="coffee-label">Підтримати</span>
-    </button>
-    <button class="burger" id="burger" onclick="toggleNav()" aria-label="Меню">
-        <span></span><span></span><span></span>
-    </button>
+<div class="logo" onclick="goHome()" style="cursor:pointer;">
+<img src="GBlock.png" alt="G9" class="logo-cube-img">
+<span><span class="g">G</span><span class="n">9</span> <span class="t">Launcher</span></span>
+</div>
+<nav id="mainNav">
+<ul>
+<li><a href="#features" onclick="goToSection(event,'features')">Можливості</a></li>
+<li><a href="#tutorials" onclick="goToSection(event,'tutorials')">Гайди</a></li>
+<li><a href="#support" onclick="goToSection(event,'support')">Підтримка</a></li>
+<li><a href="#" onclick="showNews();closeNav();return false;">Новини</a></li>
+<li><a href="#" onclick="showAddons();closeNav();return false;">Доповнення</a></li>
+</ul>
+</nav>
+<button class="coffee-btn" onclick="openModal('coffeeModal')">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"></path><line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line></svg>
+<span class="coffee-label">Підтримати</span>
+</button>
+<button aria-label="Меню" class="burger" id="burger" onclick="toggleNav()">
+<span></span><span></span><span></span>
+</button>
 </header>
-
 <main>
-    <!-- HERO -->
-    <section class="hero" id="hero" style="max-width:100%;">
-        <h1><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</h1>
-        <p class="hero-slogan">Твій шлях до Minecraft</p>
-        <p class="hero-sub">Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень. Безкоштовно та безпечно.</p>
-        <div class="download-group">
-            <a href="https://www.mediafire.com/file/lh8qvy374oyv814/G9_Launcher.rar/file" class="dl-btn dl-btn-primary" target="_blank">
-                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Windows 10 / 11
-            </a>
-            <button onclick="openModal('patcherModal')" class="dl-btn dl-btn-glass">
-                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                Патчер — Windows 7 / 8
+<!-- HERO -->
+<section class="hero" id="hero" style="max-width:100%;">
+<div class="hero-inner">
+<div class="hero-text">
+<h1 class="hero-h1"><span class="hero-h1-normal">Швидкий. Простий.</span><br><span class="hero-h1-accent"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</span></h1>
+<p class="hero-sub">Завантажуй будь-яку версію гри, налаштовуй FPS та грай без обмежень. Безкоштовно та безпечно.</p>
+<div class="download-group">
+<button class="dl-btn dl-btn-primary dl-btn-main" onclick="openOsModal()">
+<svg class="icon" fill="none" height="19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="19"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+                Завантажити
             </button>
-            <span class="dl-btn dl-btn-android">
-                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2H7L2 12l5 10h10l5-10z"/><line x1="12" y1="6" x2="12" y2="6.01"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
-                Android &nbsp;<span class="cs-tag">COMING SOON</span>
-            </span>
-            <span class="dl-btn dl-btn-android">
-                <svg class="icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                Linux &nbsp;<span class="cs-tag">COMING SOON</span>
-            </span>
+<div class="os-support">
+<svg class="icon" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+                Windows, Android, Linux
         </div>
-        <div class="os-support">
-            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            Оберіть спосіб завантаження під вашу ОС
-        </div>
-        <div class="version-badge">
-            <span class="version-dot"></span>
-            Підтримка версії Minecraft:&nbsp;<span class="version-num">26.2</span>
-        </div>
-    </section>
+</div>
+<div class="version-badge">
+<span class="version-dot"></span>
+            Підтримка версії Minecraft: <span class="version-num">26.2</span>
+</div>
+</div>
+<div class="hero-visual">
+<img alt="Інтерфейс G9 Launcher" class="hero-visual-img" onclick="openLightbox(this.src,this.alt)" src="main-menu.png"/>
+</div>
+</div>
+</section>
 
-    <!-- FEATURES -->
-    <section id="features" class="animate-on-scroll">
-        <h2 class="section-title">Чому саме ми?</h2>
-        <div class="features-grid">
-            <div class="glass-card">
-                <h3>
-                    <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+<!-- BETA DOWNLOAD CALLOUT -->
+<section class="beta-callout animate-on-scroll" id="beta">
+<div class="beta-callout-box">
+<div class="beta-callout-left">
+<span class="beta-tag">BETA</span>
+<h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA</h3>
+<p class="beta-desc">Рання тестова збірка з новими функціями, які ще не потрапили у стабільну версію. Можливі баги — повідом про них у підтримці.</p>
+</div>
+<span class="beta-dl-btn beta-dl-btn-soon">
+<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+            Скоро
+        </span>
+</div>
+</section>
+<!-- FEATURES -->
+<section class="animate-on-scroll" id="features">
+<h2 class="section-title">Чому саме ми?</h2>
+<div class="features-grid">
+<div class="glass-card">
+<h3>
+<svg class="icon" fill="none" height="22" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="22"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     Швидкодія
                 </h3>
-                <p>Програма надає можливість всередині неї змінити параметри для підвищення FPS у грі. Розробники створюють його за допомогою ШІ інструментів та редагують код.</p>
-            </div>
-            <div class="glass-card">
-                <h3>
-                    <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+<p>Програма надає можливість всередині неї змінити параметри для підвищення FPS у грі. Розробники створюють його за допомогою ШІ інструментів та редагують код.</p>
+</div>
+<div class="glass-card">
+<h3>
+<svg class="icon" fill="none" height="22" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="22"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     Сучасний дизайн
                 </h3>
-                <p>Інтерфейс створено за мотивами оригінального лаунчеру гри з зручним положенням елементів (UX/UI).</p>
-            </div>
-            <div class="glass-card">
-                <h3>
-                    <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+<p>Інтерфейс створено за мотивами оригінального лаунчеру гри з зручним положенням елементів (UX/UI).</p>
+</div>
+<div class="glass-card">
+<h3>
+<svg class="icon" fill="none" height="22" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     Безпека
                 </h3>
-                <p>Програма не має у собі вірусів, використовуються надійні сервери для завантаження гри на ваш пристрій.</p>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ABOUT MINECRAFT -->
-    <section id="about" class="animate-on-scroll">
-        <h2 class="section-title">Що таке G9 Launcher?</h2>
-        <div class="glass-card">
-            <div class="about-mc">
-                <div>
-                    <h3 style="font-size:1.4rem;margin-bottom:1rem;color:var(--primary-dark);">Лаунчер для запуску Minecraft</h3>
-                    <p style="color:#2e5e30;margin-bottom:1rem;font-size:.97rem;">
-                        <strong>G9 Launcher</strong> — це програма для завантаження та запуску <strong>Minecraft</strong> на твоєму ПК. Просто встанови, обери версію та грай — без зайвих кроків.
+<p>Програма не має у собі вірусів, використовуються надійні сервери для завантаження гри на ваш пристрій.</p>
+</div>
+</div>
+</section>
+<!-- ABOUT MINECRAFT -->
+<section class="animate-on-scroll" id="about">
+<h2 class="section-title"><span class="section-title-normal">Що таке</span> <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher?</h2>
+<div class="glass-card">
+<div class="about-mc">
+<div>
+<h3 style="font-size:1.4rem;margin-bottom:1rem;color:var(--primary-dark);">Лаунчер для запуску Minecraft</h3>
+<p style="color:var(--text-muted);margin-bottom:1rem;font-size:.97rem;">
+<strong><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</strong> — це програма для завантаження та запуску <strong>Minecraft</strong> на твоєму ПК. Просто встанови, обери версію та грай — без зайвих кроків.
                     </p>
-                    <p style="color:#2e5e30;font-size:.97rem;">
+<p style="color:var(--text-muted);font-size:.97rem;">
                         Підтримуються всі популярні версії Minecraft, включно з модами та знаменитими збірками. Вбудований оптимізатор FPS дозволяє грати навіть на слабких ПК.
                     </p>
-                </div>
-                <img src="minecraft-block.png" alt="Minecraft" class="mc-pixel-art">
-            </div>
-        </div>
-    </section>
-
-    <!-- TUTORIALS -->
-    <section id="tutorials" class="animate-on-scroll">
-        <h2 class="section-title">Гайди по лаунчеру</h2>
-        <div class="tutorial-list">
-            <div class="tutorial-item" id="tut-1">
-                <div class="tutorial-header" onclick="toggleTutorial('tut-1')">
-                    <div class="tutorial-num">1</div>
-                    <span class="tutorial-title">Як грати по локальній мережі ( LAN ) з друзями</span>
-                    <svg class="tutorial-arrow icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="tutorial-body">
-                    <p class="tutorial-placeholder">[ Перевірте чи мають гравці різні нікнейми, перевірте чи ви підключені до однієї мережі та перевірте чи використовуєте одну і ту саму версію. 
+</div>
+<div class="mc-pixel-art">
+    <img src="Pic.png" alt="Minecraft grass block">
+</div>
+</div>
+</div>
+</section>
+<!-- TUTORIALS -->
+<section class="animate-on-scroll" id="tutorials">
+<h2 class="section-title">Гайди по лаунчеру</h2>
+<div class="tutorial-list">
+<div class="tutorial-item" id="tut-1">
+<div class="tutorial-header" onclick="toggleTutorial('tut-1')">
+<div class="tutorial-num">1</div>
+<span class="tutorial-title">Як грати по локальній мережі ( LAN ) з друзями</span>
+<svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-body">
+<p class="tutorial-placeholder">[ Перевірте чи мають гравці різні нікнейми, перевірте чи ви підключені до однієї мережі та перевірте чи використовуєте одну і ту саму версію. 
 1. Створіть світ де будете грати, через гра наодинці.
 2. Зайдіть у ігрове меню через кнопку ESC на клавіатурі
 3. Знайдіть кнопку відкрити для LAN і виберіть параметри.
 
 Для того щоб друзі зайшли вони мають бути в головному меню та натиснути на кнопку гра в мережі. Там повинен з'явитися ваш світ з назвою натиснувши на який ви зможете приєднатися! Вдалої вам гри!  ]</p>
-                </div>
-            </div>
-            <div class="tutorial-item" id="tut-2">
-                <div class="tutorial-header" onclick="toggleTutorial('tut-2')">
-                    <div class="tutorial-num">2</div>
-                    <span class="tutorial-title">Встановлення патчера для Windows 7 / 8</span>
-                    <svg class="tutorial-arrow icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="tutorial-body">
-                    <p class="tutorial-placeholder">[ Крок 1: Завантаження та розпакування
+</div>
+</div>
+<div class="tutorial-item" id="tut-2">
+<div class="tutorial-header" onclick="toggleTutorial('tut-2')">
+<div class="tutorial-num">2</div>
+<span class="tutorial-title">Встановлення патчера для Windows 7 / 8</span>
+<svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-body">
+<p class="tutorial-placeholder">[ Крок 1: Завантаження та розпакування
 Перейдіть за посиланням на GitHub та завантажте останній реліз патчера (файл .zip). Розпакуйте вміст архіву у будь-яку зручну папку на вашому комп'ютері.
 
 Крок 2: Встановлення компонентів
 Запустіть файл KexSetup.exe від імені адміністратора. У вікні, що з'явиться, натисніть кнопку "Install". Дочекайтеся завершення процесу — це додасть необхідні бібліотеки у вашу систему Windows 7 або 8 для запуску сучасних програм.
 
-Крок 3: Налаштування G9 Launcher
-Після встановлення патчера натисніть правою кнопкою миші на ярлик або .exe файл G9 Launcher. Оберіть "Властивості" (Properties), перейдіть у вкладку "VxKex".
+Крок 3: Налаштування <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher
+Після встановлення патчера натисніть правою кнопкою миші на ярлик або .exe файл <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Оберіть "Властивості" (Properties), перейдіть у вкладку "VxKex".
 
 Крок 4: Активація режиму сумісності
 У вкладці VxKex поставте галочку навпроти "Enable VxKex for this program". У випадаючому списку виберіть "Windows 10" або "Windows 11". Натисніть "Apply" (Застосувати).
 
 Крок 5: Запуск
 Тепер просто запускайте лаунчер як зазвичай. Патчер автоматично "підмінить" версію системи для програми, дозволяючи їй працювати без помилок про несумісність.]</p>
-                </div>
-            </div>
-            <div class="tutorial-item" id="tut-3">
-                <div class="tutorial-header" onclick="toggleTutorial('tut-3')">
-                    <div class="tutorial-num">3</div>
-                    <span class="tutorial-title">Налаштування FPS та продуктивності</span>
-                    <svg class="tutorial-arrow icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="tutorial-body">
-                    <p class="tutorial-placeholder">[ Крок 1: Виділення оперативної пам'яті (RAM)
+</div>
+</div>
+<div class="tutorial-item" id="tut-3">
+<div class="tutorial-header" onclick="toggleTutorial('tut-3')">
+<div class="tutorial-num">3</div>
+<span class="tutorial-title">Налаштування FPS та продуктивності</span>
+<svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-body">
+<p class="tutorial-placeholder">[ Крок 1: Виділення оперативної пам'яті (RAM)
 Перейдіть у розділ "Налаштування" в боковому меню лаунчера. Знайдіть повзунок "Виділена ОЗУ". Для стабільної гри на сучасних версіях (1.20+) рекомендується виділяти від 4 ГБ до 8 ГБ, але не більше половини від загальної кількості вашої пам'яті.  Крок 2: Оптимізація процесора
 У блоці "Процесор" виберіть кількість потоків, які лаунчер буде використовувати для гри. Якщо у вас потужний комп'ютер, залиште значення "Авто", або виберіть максимальну доступну кількість ядер для швидшого завантаження світів.  Крок 3: Використання аргументів JVM
-G9 Launcher автоматично застосовує сучасні параметри оптимізації, такі як -XX:+UseG1GC (сміттєзбирач G1) та -XX:+UnlockExperimentalVMOptions. Це допомагає уникнути різких "фризів" під час гри та робить процес плавнішим.  Крок 4: Встановлення оптимізаційних модів
+<span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher автоматично застосовує сучасні параметри оптимізації, такі як -XX:+UseG1GC (сміттєзбирач G1) та -XX:+UnlockExperimentalVMOptions. Це допомагає уникнути різких "фризів" під час гри та робить процес плавнішим.  Крок 4: Встановлення оптимізаційних модів
 Для максимального ефекту обирайте версії з позначкою Fabric або Forge у списку версій. Після першого запуску встановіть у папку mods такі моди, як Sodium (для Fabric) або Embeddium (для Forge/NeoForge) — це може підняти ваш FPS у 2-3 рази.  Крок 5: Налаштування графіки у гріПісля запуску Minecraft зайдіть у налаштування графіки:Дальність промальовування: 8-12 чанків.М'яке освітлення: Вимкнено або Мінімум.Частота кадрів (Max FPS): Unlimited (Без обмежень). ]</p>
-                </div>
-            </div>
-            <div class="tutorial-item" id="tut-4">
-                <div class="tutorial-header" onclick="toggleTutorial('tut-4')">
-                    <div class="tutorial-num">4</div>
-                    <span class="tutorial-title">Ai GameBooster: Як використовувати?</span>
-                    <svg class="tutorial-arrow icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="tutorial-body">
-                    <p class="tutorial-placeholder">[ Він ще в розробці!!! ]</p>
-                </div>
-            </div>
-            <div class="tutorial-item" id="tut-5">
-                <div class="tutorial-header" onclick="toggleTutorial('tut-5')">
-                    <div class="tutorial-num">5</div>
-                    <span class="tutorial-title">Вирішення поширених проблем</span>
-                    <svg class="tutorial-arrow icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="tutorial-body">
-                    <p class="tutorial-placeholder">[ їх немає або ми виправляємо оновленнями! ]</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section id="gallery" class="animate-on-scroll">
-        <h2 class="section-title">Інтерфейс лаунчера</h2>
-        <div class="glass-card">
-            <p style="text-align:center;margin-bottom:1.5rem;color:#2e5e30;font-size:.93rem;">Натисни на скріншот, щоб переглянути у повному розмірі.</p>
-            <div class="screenshot-grid">
-                <img class="screenshot-img" src="main-menu.png" alt="Головне меню G9 Launcher" onclick="openLightbox(this.src,this.alt)">
-                <img class="screenshot-img" src="settings.png" alt="Налаштування G9 Launcher" onclick="openLightbox(this.src,this.alt)">
-                <img class="screenshot-img" src="versions.png" alt="Вибір версій G9 Launcher" onclick="openLightbox(this.src,this.alt)">
-            </div>
-        </div>
-    </section>
-
-    <!-- SUPPORT -->
-    <section id="support" class="animate-on-scroll">
-        <h2 class="section-title">Підтримка</h2>
-        <div class="glass-card">
-            <div class="support-tabs">
-                <button class="sup-tab active" id="tab-bug" onclick="switchTab('bug')">
-                    <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v1a4 4 0 0 0 8 0V3"/><path d="M3 10h18"/><path d="M5 10v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+</div>
+</div>
+<div class="tutorial-item" id="tut-4">
+<div class="tutorial-header" onclick="toggleTutorial('tut-4')">
+<div class="tutorial-num">4</div>
+<span class="tutorial-title">Ai GameBooster: Як використовувати?</span>
+<svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-body">
+<p class="tutorial-placeholder">[ Він ще в розробці!!! ]</p>
+</div>
+</div>
+<div class="tutorial-item" id="tut-5">
+<div class="tutorial-header" onclick="toggleTutorial('tut-5')">
+<div class="tutorial-num">5</div>
+<span class="tutorial-title">Вирішення поширених проблем</span>
+<svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-body">
+<p class="tutorial-placeholder">[ їх немає або ми виправляємо оновленнями! ]</p>
+</div>
+</div>
+</div>
+</section>
+<!-- GALLERY -->
+<section class="animate-on-scroll" id="gallery">
+<h2 class="section-title">Інтерфейс лаунчера</h2>
+<div class="glass-card">
+<p style="text-align:center;margin-bottom:1.5rem;color:var(--text-muted);font-size:.93rem;">Натисни на скріншот, щоб переглянути у повному розмірі.</p>
+<div class="screenshot-grid">
+<img alt="Головне меню G9 Launcher" class="screenshot-img" onclick="openLightbox(this.src,this.alt)" src="main-menu.png"/>
+<img alt="Налаштування G9 Launcher" class="screenshot-img" onclick="openLightbox(this.src,this.alt)" src="settings.png"/>
+<img alt="Вибір версій G9 Launcher" class="screenshot-img" onclick="openLightbox(this.src,this.alt)" src="versions.png"/>
+</div>
+</div>
+</section>
+<!-- SUPPORT -->
+<section class="animate-on-scroll" id="support">
+<h2 class="section-title">Підтримка</h2>
+<div class="glass-card">
+<div class="support-tabs">
+<button class="sup-tab active" id="tab-bug" onclick="switchTab('bug')">
+<svg class="icon" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="15"><path d="M8 3v1a4 4 0 0 0 8 0V3"></path><path d="M3 10h18"></path><path d="M5 10v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10"></path><line x1="12" x2="12" y1="14" y2="18"></line><line x1="10" x2="14" y1="16" y2="16"></line></svg>
                     Повідомити про баг
                 </button>
-                <button class="sup-tab" id="tab-idea" onclick="switchTab('idea')">
-                    <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+<button class="sup-tab" id="tab-idea" onclick="switchTab('idea')">
+<svg class="icon" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="15"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
                     Запропонувати ідею
                 </button>
-                <button class="sup-tab" disabled>
-                    <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    Telegram-бот &nbsp;<span class="cs-badge">SOON</span>
-                </button>
-                <button class="sup-tab" disabled>
-                    <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
-                    Live-чат &nbsp;<span class="cs-badge">SOON</span>
-                </button>
-                <button class="sup-tab" disabled>
-                    <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Тікет-система &nbsp;<span class="cs-badge">SOON</span>
-                </button>
-            </div>
-            <div class="support-panel active" id="panel-bug">
-                <div class="sup-form-box">
-                    <p>Знайшов баг? Заповни форму — ми розглянемо його якнайшвидше. Також можеш написати напряму на пошту.</p>
-                    <div class="sup-links">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_qxo0iNMK1K6JoUCoY8TA85AUI-zpoxHN3RkDnn3SBFG76Q/viewform?usp=dialog" class="sup-link">
-                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v1a4 4 0 0 0 8 0V3"/><path d="M3 10h18"/><path d="M5 10v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10"/></svg>
+<button class="sup-tab" disabled="">
+<svg class="icon" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="15"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    Telegram-бот  <span class="cs-badge">SOON</span>
+</button>
+<button class="sup-tab" disabled="">
+<svg class="icon" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="15"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                    Live-чат  <span class="cs-badge">SOON</span>
+</button>
+<button class="sup-tab" disabled="">
+<svg class="icon" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="15"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    Тікет-система  <span class="cs-badge">SOON</span>
+</button>
+</div>
+<div class="support-panel active" id="panel-bug">
+<div class="sup-form-box">
+<p>Знайшов баг? Заповни форму — ми розглянемо його якнайшвидше. Також можеш написати напряму на пошту.</p>
+<div class="sup-links">
+<a class="sup-link" href="https://docs.google.com/forms/d/e/1FAIpQLSd_qxo0iNMK1K6JoUCoY8TA85AUI-zpoxHN3RkDnn3SBFG76Q/viewform?usp=dialog">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><path d="M8 3v1a4 4 0 0 0 8 0V3"></path><path d="M3 10h18"></path><path d="M5 10v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10"></path></svg>
                             Відкрити форму
                         </a>
-                        <a href="mailto:g9.studios.offical@gmail.com" class="sup-link sup-link-mail">
-                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+<a class="sup-link sup-link-mail" href="mailto:g9.studios.offical@gmail.com">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                             Написати на пошту
                         </a>
-                    </div>
-                </div>
-            </div>
-            <div class="support-panel" id="panel-idea">
-                <div class="sup-form-box">
-                    <p>Маєш ідею для покращення G9 Launcher? Розкажи нам — найкращі ідеї потраплять у наступні оновлення!</p>
-                    <div class="sup-links">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScmur4P6RCgCql0Mi2g4QWD6L_5ufU4wwU2FhJyTsdkE8eCuQ/viewform?usp=publish-editor" class="sup-link">
-                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+</div>
+</div>
+</div>
+<div class="support-panel" id="panel-idea">
+<div class="sup-form-box">
+<p>Маєш ідею для покращення <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher? Розкажи нам — найкращі ідеї потраплять у наступні оновлення!</p>
+<div class="sup-links">
+<a class="sup-link" href="https://docs.google.com/forms/d/e/1FAIpQLScmur4P6RCgCql0Mi2g4QWD6L_5ufU4wwU2FhJyTsdkE8eCuQ/viewform?usp=publish-editor">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
                             Запропонувати ідею
                         </a>
-                        <a href="mailto:g9.studios.offical@gmail.com" class="sup-link sup-link-mail">
-                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+<a class="sup-link sup-link-mail" href="mailto:g9.studios.offical@gmail.com">
+<svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                             Написати на пошту
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+</div>
+</div>
+</div>
+</div>
+</section>
 </main>
-
 <!-- ADDONS PAGE (окрема вкладка) -->
-<div id="addons-page" class="addons-page">
-    <button class="addons-back-btn" onclick="hideAddons()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+<div class="addons-page" id="addons-page">
+<button class="addons-back-btn" onclick="hideAddons()">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
         Назад
     </button>
-    <h2 class="section-title" style="text-align:left;margin-bottom:.5rem;">Наші доповнення</h2>
-    <p style="color:#2e5e30;margin-bottom:2rem;font-size:.95rem;">Офіційні та рекомендовані моди і ресурс паки від команди G9 Studios.</p>
-    <div class="addons-tabs">
-        <button class="addons-tab active" onclick="switchAddonTab('mods',this)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+<h2 class="section-title" style="text-align:left;margin-bottom:.5rem;">Наші доповнення</h2>
+<p style="color:var(--text-muted);margin-bottom:2rem;font-size:.95rem;">Офіційні та рекомендовані моди і ресурс паки від команди <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios.</p>
+<div class="addons-tabs">
+<button class="addons-tab active" onclick="switchAddonTab('mods',this)">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             Моди
         </button>
-        <button class="addons-tab" onclick="switchAddonTab('packs',this)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+<button class="addons-tab" onclick="switchAddonTab('packs',this)">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><rect height="18" rx="2" width="18" x="3" y="3"></rect><path d="M3 9h18M9 21V9"></path></svg>
             Ресурс паки
         </button>
-        <button class="addons-tab" onclick="switchAddonTab('fps',this)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+<button class="addons-tab" onclick="switchAddonTab('fps',this)">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
             FPS паки
         </button>
-    </div>
-    <div class="addons-panel active" id="panel-mods">
-        <div class="addons-grid">
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>G9 Mod #1</h3><p>Власний мод від G9 Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>G9 Mod #2</h3><p>Власний мод від G9 Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><h3>G9 Mod #3</h3><p>Власний мод від G9 Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>G9 Mod #4</h3><p>Власний мод від G9 Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>G9 Mod #5</h3><p>Власний мод від G9 Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-        </div>
-    </div>
-    <div class="addons-panel" id="panel-packs">
-        <div class="addons-grid">
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3>G9 Textures</h3><p>Офіційний ресурс пак від G9 Studios. Чіткі текстури у стилі ванілла з покращеними деталями.</p><div class="addon-meta"><span class="addon-ver">16x – 32x</span><span class="addon-ver">1.8 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h3>G9 Totem</h3><p>Кастомний тотем безсмертя з анімацією у стилі G9. Виглядає круто при активації.</p><div class="addon-meta"><span class="addon-ver">16x</span><span class="addon-ver">1.9 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>G9 Sky</h3><p>Красиве небо з динамічними хмарами та покращеними сутінками і розсвітами.</p><div class="addon-meta"><span class="addon-ver">32x</span><span class="addon-ver">1.16 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><h3>G9 UI Pack</h3><p>Переробляє інтерфейс гри: інвентар, хотбар та меню у мінімалістичному зеленому стилі.</p><div class="addon-meta"><span class="addon-ver">GUI</span><span class="addon-ver">1.8 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><h3>G9 Sounds</h3><p>Покращені звуки навколишнього середовища: ліс, вода, печери. Атмосфера на новому рівні.</p><div class="addon-meta"><span class="addon-ver">Звуки</span><span class="addon-ver">1.12 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
-        </div>
-    </div>
-    <div class="addons-panel" id="panel-fps">
-        <div class="addons-grid">
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>G9 FPS PACK</h3><p>Офіційний набір оптимізаційних налаштувань та модів від G9 Studios для максимального приросту FPS на будь-якому ПК.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/05g7y9mxqq9lozd/G9_FPS_PACK_26.2_FABRIC.zip/file" target="_blank" rel="noopener">Завантажити</a></div>
-            <div class="addon-card"><div class="addon-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></div><h3>G9 MOBILE FPS PACK</h3><p>Версія FPS паку для мобільних лаунчерів — PojavLauncher та FoldCraft Launcher. Оптимізація продуктивності на телефонах і планшетах.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span><span class="addon-ver">PojavLauncher / FoldCraft</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/mau3z7kliwog3sz/MOBILE_FPS_PACK_FABRIC_26.2.zip/file" target="_blank" rel="noopener">Завантажити</a></div>
-        </div>
-    </div>
 </div>
-
-<div id="news-page" class="addons-page">
-    <button class="addons-back-btn" onclick="hideNews()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+<div class="addons-panel active" id="panel-mods">
+<div class="addons-grid">
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Mod #1</h3><p>Власний мод від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Mod #2</h3><p>Власний мод від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Mod #3</h3><p>Власний мод від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Mod #4</h3><p>Власний мод від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Mod #5</h3><p>Власний мод від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Опис буде додано невдовзі.</p><div class="addon-meta"><span class="addon-ver">Fabric / Forge</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+</div>
+</div>
+<div class="addons-panel" id="panel-packs">
+<div class="addons-grid">
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><path d="M3 9h18M9 21V9"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Textures</h3><p>Офіційний ресурс пак від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios. Чіткі текстури у стилі ванілла з покращеними деталями.</p><div class="addon-meta"><span class="addon-ver">16x – 32x</span><span class="addon-ver">1.8 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Totem</h3><p>Кастомний тотем безсмертя з анімацією у стилі <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span>. Виглядає круто при активації.</p><div class="addon-meta"><span class="addon-ver">16x</span><span class="addon-ver">1.9 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Sky</h3><p>Красиве небо з динамічними хмарами та покращеними сутінками і розсвітами.</p><div class="addon-meta"><span class="addon-ver">32x</span><span class="addon-ver">1.16 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> UI Pack</h3><p>Переробляє інтерфейс гри: інвентар, хотбар та меню у мінімалістичному зеленому стилі.</p><div class="addon-meta"><span class="addon-ver">GUI</span><span class="addon-ver">1.8 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Sounds</h3><p>Покращені звуки навколишнього середовища: ліс, вода, печери. Атмосфера на новому рівні.</p><div class="addon-meta"><span class="addon-ver">Звуки</span><span class="addon-ver">1.12 – 1.21</span></div><span class="addon-soon">НЕЗАБАРОМ</span></div>
+</div>
+</div>
+<div class="addons-panel" id="panel-fps">
+<div class="addons-grid">
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> FPS PACK</h3><p>Офіційний набір оптимізаційних налаштувань та модів від <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios для максимального приросту FPS на будь-якому ПК.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/05g7y9mxqq9lozd/G9_FPS_PACK_26.2_FABRIC.zip/file" rel="noopener" target="_blank">Завантажити</a></div>
+<div class="addon-card"><div class="addon-card-icon"><svg fill="none" height="24" stroke="var(--primary)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24"><rect height="20" rx="2" width="10" x="7" y="2"></rect><line x1="11" x2="13" y1="18" y2="18"></line></svg></div><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> MOBILE FPS PACK</h3><p>Версія FPS паку для мобільних лаунчерів — PojavLauncher та FoldCraft Launcher. Оптимізація продуктивності на телефонах і планшетах.</p><div class="addon-meta"><span class="addon-ver">Fabric</span><span class="addon-ver">26.2</span><span class="addon-ver">PojavLauncher / FoldCraft</span></div><a class="addon-dl-btn" href="https://www.mediafire.com/file/mau3z7kliwog3sz/MOBILE_FPS_PACK_FABRIC_26.2.zip/file" rel="noopener" target="_blank">Завантажити</a></div>
+</div>
+</div>
+</div>
+<div class="addons-page" id="news-page">
+<button class="addons-back-btn" onclick="hideNews()">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
         Назад
     </button>
-    <h2 class="section-title" style="text-align:left;margin-bottom:.5rem;">Новини</h2>
-    <p style="color:#2e5e30;margin-bottom:2rem;font-size:.95rem;">Останні оновлення, релізи та новини від команди G9 Studios.</p>
-    <div class="news-list">
-        <div class="news-card">
-            <div class="news-card-top"><h3>G9 Launcher v1.5 FP 2</h3><span class="news-date">11.07.2026</span></div>
-            <span class="news-badge">Актуальна версія</span>
-            <p>Fix Pack 2: виправлено кнопку перевірки оновлень (тепер реагує миттєво, навіть якщо в фоні йде авто-перевірка при старті лаунчера), система оновлень тепер працює навіть якщо до релізу не прикріплений файл (відкриває сторінку GitHub), покращений пошук встановлених Java через реєстр Windows та прямі шляхи, знятий авто-скан Java при старті (більше не показує консоль на 3-4 сек), додано 26.3 Snapshot 4.</p>
-        </div>
-        <div class="news-card">
-            <div class="news-card-top"><h3>G9 Launcher v1.5 FP 1</h3><span class="news-date">26.06.2026</span></div>
-            <p>Fix Pack 1: виправлено консольне вікно при запуску гри, виправлено збереження даних гри (ізоляція тепер по версії MC без лоадера), список встановлених Java — пошук через реєстр Windows, виправлено кнопку перевірки оновлень на сторінці «Про програму», додано зміну розміру за всіма кутами вікна, новий снапшот 26.3 Snapshot 3.</p>
-        </div>
-        <div class="news-card">
-            <div class="news-card-top"><h3><span class="mc-block-icon" aria-hidden="true"></span>Minecraft 26.2</h3><span class="news-date">16.06.2026</span></div>
-            <p>Minecraft 26.1.2 вже доступний у G9 Launcher. Невеличке технічне оновлення яке вийшло 9 квітня 2026 року.</p>
-        </div>
-        <div class="news-card">
-            <div class="news-card-top"><h3>G9 Launcher v1.5</h3><span class="news-date">15.06.2026</span></div>
-            <p>G9 Launcher 1.5: автозапуск Windows, автоперевірка оновлень через GitHub, встановлення оновлень з лаунчера, фікс іконки на панелі задач, новий стиль Round UI, матеріал-дизайн у характеристиках, виправлення кнопки сайту, можливість створювати свої збірки, ізоляція версій, можливість скинути налаштування окремо для лаунчеру та для гри або усе разом, пошук встановлених версій джава, зміна вигляду при кліку на новини.</p>
-        </div>
-        <div class="news-card">
-            <div class="news-card-top"><h3>G9 Launcher v1.4 FP 1</h3><span class="news-date">13.06.2026</span></div>
-            <p>G9 Launcher отримав виправлення у версії 1.4 FP 1 (Fix Pack 1): виправлено критичний баг запуску лаунчера (DISPLAY_MAP not defined), оновлено список снапшотів 26.2 — тепер доступні всі 8 знімків та 6 Pre-Release версій Chaos Cubed, виправлено запуск стабільних версій 26.1 та 26.1.2.</p>
-        </div>
-        <div class="news-card">
-            <div class="news-card-top"><h3>G9 Launcher v1.4</h3><span class="news-date">25.05.2026</span></div>
-            <p>G9 Launcher отримав нові функції: Зміна стилю на MetroUI, зміна порядку кнопок на лівій боковій панелі, більше варіантів зміни шрифту, можливість показувати активність у Discord, покращення стилю та виправлення багів.</p>
-        </div>
-    </div>
+<h2 class="section-title" style="text-align:left;margin-bottom:.5rem;">Новини</h2>
+<p style="color:var(--text-muted);margin-bottom:2rem;font-size:.95rem;">Останні оновлення, релізи та новини від команди <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios.</p>
+<div class="news-list">
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.6</h3><span class="news-date">02.08.2026</span></div>
+<span class="news-badge">Актуальна версія</span>
+<p>Велике оновлення! Правий клік на версію у списку тепер відкриває контекстне меню з пунктом «Видалити вибрану версію» (виправлено згортання вікна при цьому). Кнопка «Грати» тепер сама показує «Завантажити», якщо версія ще не встановлена — і питає, чи одразу запустити гру після завантаження. Додано вибір стилю кнопок вікна (Windows / macOS). Тепер можна перенести всю папку зберігання гри (версії, збірки, моди, скіни) в інше місце, наприклад на інший диск. Прибрано список встановлених Java — залишився лише ручний вибір шляху. Заокруглені кути головного вікна. Також додано новий снапшот 5 від версії 26.3!</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.5 FP 2</h3><span class="news-date">11.07.2026</span></div>
+<p>Fix Pack 2: виправлено кнопку перевірки оновлень (тепер реагує миттєво, навіть якщо в фоні йде авто-перевірка при старті лаунчера), система оновлень тепер працює навіть якщо до релізу не прикріплений файл (відкриває сторінку GitHub), покращений пошук встановлених Java через реєстр Windows та прямі шляхи, знятий авто-скан Java при старті (більше не показує консоль на 3-4 сек), додано 26.3 Snapshot 4.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.5 FP 1</h3><span class="news-date">26.06.2026</span></div>
+<p>Fix Pack 1: виправлено консольне вікно при запуску гри, виправлено збереження даних гри (ізоляція тепер по версії MC без лоадера), список встановлених Java — пошук через реєстр Windows, виправлено кнопку перевірки оновлень на сторінці «Про програму», додано зміну розміру за всіма кутами вікна, новий снапшот 26.3 Snapshot 3.</p>
 </div>
 
+<div class="news-card">
+<div class="news-card-top"><h3><span aria-hidden="true" class="mc-block-icon"></span>Minecraft 26.2</h3><span class="news-date">16.06.2026</span></div>
+<p>Minecraft 26.1.2 вже доступний у <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Невеличке технічне оновлення яке вийшло 9 квітня 2026 року.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.5</h3><span class="news-date">15.06.2026</span></div>
+<p><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher 1.5: автозапуск Windows, автоперевірка оновлень через GitHub, встановлення оновлень з лаунчера, фікс іконки на панелі задач, новий стиль Round UI, матеріал-дизайн у характеристиках, виправлення кнопки сайту, можливість створювати свої збірки, ізоляція версій, можливість скинути налаштування окремо для лаунчеру та для гри або усе разом, пошук встановлених версій джава, зміна вигляду при кліку на новини.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.4 FP 1</h3><span class="news-date">13.06.2026</span></div>
+<p><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher отримав виправлення у версії 1.4 FP 1 (Fix Pack 1): виправлено критичний баг запуску лаунчера (DISPLAY_MAP not defined), оновлено список снапшотів 26.2 — тепер доступні всі 8 знімків та 6 Pre-Release версій Chaos Cubed, виправлено запуск стабільних версій 26.1 та 26.1.2.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.4</h3><span class="news-date">25.05.2026</span></div>
+<p><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher отримав нові функції: Зміна стилю на MetroUI, зміна порядку кнопок на лівій боковій панелі, більше варіантів зміни шрифту, можливість показувати активність у Discord, покращення стилю та виправлення багів.</p>
+</div>
+</div>
+</div>
 <footer>
-    <h3 style="margin-bottom:1.2rem;color:var(--primary-dark);">Залишайся на зв'язку з розробниками</h3>
-    <div class="footer-tg-group">
-        <a href="https://t.me/G9Launcher" target="_blank" class="tg-btn">
-            <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+<h3 style="margin-bottom:1.2rem;color:var(--primary-dark);">Залишайся на зв'язку з розробниками</h3>
+<div class="footer-tg-group">
+<a class="tg-btn" href="https://t.me/G9Launcher" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="17"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             G9 Studios у Telegram
         </a>
-        <a href="https://t.me/alfastudiosOFFICIAL" target="_blank" class="tg-btn">
-            <svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+<a class="tg-btn" href="https://t.me/alfastudiosOFFICIAL" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="17"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             ALFA Studios у Telegram
         </a>
-    </div>
-    <p class="copyright">© 2026 G9 Studio. Всі права захищено.</p>
-    <p class="copyright" style="margin-top:.3rem;">Розроблено у співпраці з ALFA Studios</p>
+</div>
+<p class="copyright">© 2026 G9 Studio. Всі права захищено.</p>
+<p class="copyright" style="margin-top:.3rem;">Розроблено у співпраці з ALFA Studios</p>
 </footer>
-
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
@@ -819,14 +1052,35 @@ G9 Launcher автоматично застосовує сучасні пара�
     function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
     function closeModal(id) {
         document.getElementById(id).classList.remove('open');
-        if (id === 'patcherModal') {
-            document.getElementById('patcherAgree').checked = false;
-            document.getElementById('patcherDlBtn').classList.remove('enabled');
-        }
         document.body.style.overflow='';
     }
-    document.getElementById('patcherModal').addEventListener('click', function(e){ if(e.target===this) closeModal('patcherModal'); });
+
+    function openOsModal() { showOsView('picker'); openModal('osModal'); }
+    function closeOsModal() {
+        closeModal('osModal');
+        showOsView('picker');
+        ['win1011','win78'].forEach(key => {
+            const cb = document.getElementById(key + 'Agree');
+            const btn = document.getElementById(key + 'DlBtn');
+            if (cb) cb.checked = false;
+            if (btn) btn.classList.remove('enabled');
+        });
+    }
+    function showOsView(view) {
+        document.querySelectorAll('#osModal .os-view').forEach(v => v.style.display = 'none');
+        document.getElementById('osView-' + view).style.display = 'block';
+    }
+    function toggleOsBtn(key) {
+        document.getElementById(key + 'DlBtn').classList.toggle('enabled', document.getElementById(key + 'Agree').checked);
+    }
+    document.getElementById('osModal').addEventListener('click', function(e){ if(e.target===this) closeOsModal(); });
     document.getElementById('coffeeModal').addEventListener('click', function(e){ if(e.target===this) closeModal('coffeeModal'); });
+    function closeBetaModal() {
+        closeModal('betaModal');
+        document.getElementById('betaAgree').checked = false;
+        document.getElementById('betaDlBtn').classList.remove('enabled');
+    }
+    document.getElementById('betaModal').addEventListener('click', function(e){ if(e.target===this) closeBetaModal(); });
     function copyCardNumber() {
         const number = document.getElementById('cardNumber').textContent.replace(/\s/g,'');
         navigator.clipboard.writeText(number).then(() => {
@@ -838,7 +1092,7 @@ G9 Launcher автоматично застосовує сучасні пара�
             setTimeout(() => { btn.classList.remove('copied'); text.textContent = prev; }, 2000);
         });
     }
-    function togglePatcherBtn() { document.getElementById('patcherDlBtn').classList.toggle('enabled', document.getElementById('patcherAgree').checked); }
+
 
     function toggleTutorial(id) {
         const item = document.getElementById(id);
@@ -854,7 +1108,7 @@ G9 Launcher автоматично застосовує сучасні пара�
         document.getElementById('panel-' + name).classList.add('active');
     }
 
-    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeModal('patcherModal'); closeModal('coffeeModal'); closeNav(); if(document.getElementById('addons-page').classList.contains('active')) hideAddons(); if(document.getElementById('news-page').classList.contains('active')) hideNews(); } });
+    document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeOsModal(); closeBetaModal(); closeModal('coffeeModal'); closeNav(); if(document.getElementById('addons-page').classList.contains('active')) hideAddons(); if(document.getElementById('news-page').classList.contains('active')) hideNews(); } });
 
     function showAddons() {
         hideNews(true);
