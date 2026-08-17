@@ -1115,39 +1115,6 @@
         document.getElementById('betaDlBtn').classList.remove('enabled');
     }
     document.getElementById('betaModal').addEventListener('click', function(e){ if(e.target===this) closeBetaModal(); });
-
-    // Auto-expire BETA (17.08.2026): after 29.08.2026 the download is hidden
-    // and replaced with a "waiting for update" notice everywhere BETA is shown.
-    (function() {
-        const BETA_EXPIRY = new Date('2026-08-30T00:00:00'); // start of the day after 29.08.2026
-        function applyBetaExpiredState() {
-            if (new Date() < BETA_EXPIRY) return;
-
-            // Callout button on the homepage
-            const calloutBtn = document.getElementById('betaCalloutBtn');
-            if (calloutBtn) {
-                calloutBtn.classList.add('beta-dl-btn-soon');
-                calloutBtn.removeAttribute('onclick');
-                calloutBtn.href = '#';
-                calloutBtn.addEventListener('click', e => e.preventDefault());
-                const calloutTxt = document.getElementById('betaCalloutBtnText');
-                if (calloutTxt) calloutTxt.textContent = 'Очікує оновлення';
-            }
-
-            // Modal: hide the active download flow, show the "waiting" box
-            const activeFlow = document.getElementById('betaModalActiveFlow');
-            const soonBox = document.getElementById('betaModalSoonBox');
-            if (activeFlow) activeFlow.style.display = 'none';
-            if (soonBox) {
-                soonBox.style.display = 'block';
-                const soonTitle = document.getElementById('betaSoonTitle');
-                const soonText = document.getElementById('betaSoonText');
-                if (soonTitle) soonTitle.textContent = 'Очікує оновлення';
-                if (soonText) soonText.textContent = 'Ця BETA-версія (17.08.2026) вже не актуальна і наразі очікує оновлення. Слідкуй за розділом "Новини"!';
-            }
-        }
-        applyBetaExpiredState();
-    })();
     function copyCardNumber() {
         const number = document.getElementById('cardNumber').textContent.replace(/\s/g,'');
         navigator.clipboard.writeText(number).then(() => {
