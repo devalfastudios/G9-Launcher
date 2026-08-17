@@ -321,6 +321,9 @@
         .os-row:hover { background:var(--surface-hover); border-color:var(--border-strong); transform:translateX(2px); }
         .os-row-label { flex:1; text-align:left; font-weight:600; font-size:.93rem; color:var(--text); }
         .os-row-arrow { color:var(--text-dim); flex-shrink:0; }
+        .os-row-icon-img { width:32px; height:32px; object-fit:contain; flex-shrink:0; }
+        .os-row-icon-pair { display:flex; align-items:center; gap:7px; flex-shrink:0; }
+        .os-row-icon-pair .os-row-icon-img { width:28px; height:28px; border-radius:4px; }
         .os-modal-brand {
             display:flex; flex-direction:column; align-items:center; justify-content:center;
             text-align:center; gap:.5rem; background:rgba(76,175,80,.06);
@@ -493,22 +496,30 @@
 <div class="os-modal-list">
 <h3 style="margin-bottom:1rem;">Обери свою систему</h3>
 <button class="os-row" onclick="showOsView('win1011')">
-<svg class="icon" fill="none" height="20" stroke="#4fa8e8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+<span class="os-row-icon-img win-glyph win-glyph-11" aria-hidden="true"><svg viewbox="0 0 24 24" width="100%" height="100%"><rect x="2" y="2" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="13" y="2" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="2" y="13" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="13" y="13" width="9" height="9" rx="1" fill="#4fa8e8"></rect></svg></span>
 <span class="os-row-label">Windows 10 / 11</span>
 <svg class="os-row-arrow" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
 </button>
 <button class="os-row" onclick="showOsView('win78')">
-<svg class="icon" fill="none" height="20" stroke="#4fa8e8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+<span class="os-row-icon-pair">
+<img alt="Windows 7" class="os-row-icon-img" src="Win7.jpg"/>
+<img alt="Windows 8.1" class="os-row-icon-img" src="Win8.png"/>
+</span>
 <span class="os-row-label">Windows 7 / 8</span>
 <svg class="os-row-arrow" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
 </button>
+<button class="os-row" onclick="showOsView('macos')">
+<span class="os-row-icon-img win-glyph" aria-hidden="true"><svg viewbox="0 0 24 24" width="100%" height="100%" fill="#e6e6e6"><path d="M16.4 12.7c0-2.6 2.1-3.9 2.2-4-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.3-1.2 3.1-2.5.8-1.2 1.2-2.4 1.2-2.5-.1 0-2.5-1-2.6-3.9Z"></path><path d="M13.9 4.9c.7-.8 1.1-1.9 1-3-1 .1-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.5 2.8-1.4Z"></path></svg></span>
+<span class="os-row-label">macOS</span>
+<span class="cs-tag" style="background:#e57373;color:#3d0f0f;">НЕ СТАБІЛЬНА</span>
+</button>
 <button class="os-row" onclick="showOsView('android')">
-<svg class="icon" fill="none" height="20" stroke="var(--text-dim)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M17 2H7L2 12l5 10h10l5-10z"></path><line x1="12" x2="12" y1="6" y2="6.01"></line><line x1="12" x2="12" y1="12" y2="16"></line></svg>
+<span class="os-row-icon-img win-glyph" aria-hidden="true"><svg viewbox="0 0 24 24" width="100%" height="100%" fill="#a4c639"><path d="M6 10.5v6a1 1 0 0 0 1 1h.5v2.3a1.2 1.2 0 0 0 2.4 0V17.5h4.2v2.3a1.2 1.2 0 0 0 2.4 0V17.5H17a1 1 0 0 0 1-1v-6z"></path><path d="M6.6 9.5a5.4 5.4 0 0 1 10.8 0z"></path><circle cx="9.3" cy="7.3" r=".7" fill="#0c1712"></circle><circle cx="14.7" cy="7.3" r=".7" fill="#0c1712"></circle><path d="m8.3 4.3-1-1.4M15.7 4.3l1-1.4" stroke="#a4c639" stroke-linecap="round" stroke-width="1"></path><rect x="3.3" y="10.5" width="1.8" height="5" rx=".9"></rect><rect x="18.9" y="10.5" width="1.8" height="5" rx=".9"></rect></svg></span>
 <span class="os-row-label">Android</span>
 <span class="cs-tag">SOON</span>
 </button>
 <button class="os-row" onclick="showOsView('linux')">
-<svg class="icon" fill="none" height="20" stroke="var(--text-dim)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+<img alt="Linux" class="os-row-icon-img" src="LinuxLOGO.png"/>
 <span class="os-row-label">Linux</span>
 <span class="cs-tag">SOON</span>
 </button>
@@ -528,7 +539,7 @@
             Назад
         </button>
 <h3>
-<svg class="icon" fill="none" height="20" stroke="#1976d2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span class="win-glyph win-glyph-11" aria-hidden="true" style="display:inline-block;width:28px;height:28px;vertical-align:middle;"><svg viewbox="0 0 24 24" width="100%" height="100%"><rect x="2" y="2" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="13" y="2" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="2" y="13" width="9" height="9" rx="1" fill="#4fa8e8"></rect><rect x="13" y="13" width="9" height="9" rx="1" fill="#4fa8e8"></rect></svg></span>
             Завантаження для Windows 10 / 11
         </h3>
 <div class="modal-content-box">
@@ -583,6 +594,26 @@
         </a>
 </div>
 
+<!-- MACOS UNSTABLE VIEW -->
+<div class="os-view" id="osView-macos" style="display:none">
+<button class="os-back-btn" onclick="showOsView('picker')">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24" width="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад
+        </button>
+<h3>
+<span><svg class="icon" fill="none" height="20" stroke="#e57373" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg> Завантаження для macOS</span>
+        </h3>
+<div class="modal-content-box">
+<h4>Не стабільна версія</h4>
+<p>Версія <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher для macOS зараз перебуває на ранній стадії тестування. Можливі баги, збої в роботі та некоректна поведінка окремих функцій — вони ще не пройшли повне тестування, як версії для Windows.</p>
+<p>Якщо зіткнешся з проблемою — повідом про неї у розділі "Підтримка", це допоможе нам виправити macOS-версію швидше.</p>
+</div>
+<a class="modal-dl-btn" href="#" id="macosDlBtn" target="_blank">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+            Завантажити для macOS
+        </a>
+</div>
+
 <!-- ANDROID SOON VIEW -->
 <div class="os-view" id="osView-android" style="display:none">
 <button class="os-back-btn" onclick="showOsView('picker')">
@@ -590,7 +621,7 @@
             Назад
         </button>
 <div class="os-soon-box">
-<svg fill="none" height="34" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="34"><path d="M17 2H7L2 12l5 10h10l5-10z"></path><line x1="12" x2="12" y1="6" y2="6.01"></line><line x1="12" x2="12" y1="12" y2="16"></line></svg>
+<svg viewbox="0 0 24 24" width="34" height="34" fill="#a4c639"><path d="M6 10.5v6a1 1 0 0 0 1 1h.5v2.3a1.2 1.2 0 0 0 2.4 0V17.5h4.2v2.3a1.2 1.2 0 0 0 2.4 0V17.5H17a1 1 0 0 0 1-1v-6z"></path><path d="M6.6 9.5a5.4 5.4 0 0 1 10.8 0z"></path><circle cx="9.3" cy="7.3" r=".7" fill="#0c1712"></circle><circle cx="14.7" cy="7.3" r=".7" fill="#0c1712"></circle><path d="m8.3 4.3-1-1.4M15.7 4.3l1-1.4" stroke="#a4c639" stroke-linecap="round" stroke-width="1"></path><rect x="3.3" y="10.5" width="1.8" height="5" rx=".9"></rect><rect x="18.9" y="10.5" width="1.8" height="5" rx=".9"></rect></svg>
 <h4>Android-версія в розробці</h4>
 <p>Ми вже працюємо над версією для Android. Слідкуй за розділом "Новини", щоб не пропустити реліз!</p>
 </div>
@@ -603,7 +634,7 @@
             Назад
         </button>
 <div class="os-soon-box">
-<svg fill="none" height="34" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="34"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+<img alt="Linux" src="LinuxLOGO.png" style="width:34px;height:34px;object-fit:contain;margin:0 auto;"/>
 <h4>Linux-версія в розробці</h4>
 <p>Ми вже працюємо над версією для Linux. Слідкуй за розділом "Новини", щоб не пропустити реліз!</p>
 </div>
@@ -642,26 +673,25 @@
         </h3>
 <div class="modal-content-box">
 <h4>Перед завантаженням прочитай</h4>
-<p><span class="beta-tag" style="margin-bottom:0;">BETA</span></p>
+<p><span class="beta-tag" style="margin-bottom:0;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span></p>
 <p>Це рання тестова збірка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Вона може містити неперевірені функції, помилки, збої в роботі лаунчера або гри, а також бути нестабільною порівняно зі стабільною версією.</p>
 <p>Встановлюючи та використовуючи BETA-версію, ти робиш це на власний ризик. Уся відповідальність за можливі наслідки використання (втрата даних, збереження, конфлікти з модами тощо) лежить на користувачі, який завантажує програму.</p>
 <p>Команда <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios докладає зусиль, щоб BETA працювала стабільно, але не гарантує повну відсутність багів. Якщо знайдеш проблему — будь ласка, повідом у розділі "Підтримка".</p>
 </div>
-<!-- Agreement flow — currently hidden until a real BETA download link is ready. Keep markup intact, just unhide (remove style) to re-enable. -->
-<div style="display:none;">
+<div id="betaModalActiveFlow">
 <div class="modal-agree">
 <input id="betaAgree" onchange="toggleOsBtn('beta')" type="checkbox"/>
 <label for="betaAgree">Я розумію ризики використання BETA-версії та приймаю всю відповідальність за наслідки на себе</label>
 </div>
-<a class="modal-dl-btn" href="#" id="betaDlBtn" target="_blank">
+<a class="modal-dl-btn" href="https://drive.google.com/file/d/1l4R_tCkW8BCiD08XnR4Enxq_qfuWT97n/view?usp=sharing" id="betaDlBtn" rel="noopener" target="_blank">
 <svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
             Завантажити BETA
         </a>
 </div>
-<div class="os-soon-box" style="padding-top:.5rem;">
+<div class="os-soon-box" id="betaModalSoonBox" style="display:none; padding-top:.5rem;">
 <svg fill="none" height="30" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="30"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-<h4>Скоро</h4>
-<p>Завантаження BETA-версії буде доступне найближчим часом. Слідкуй за розділом "Новини"!</p>
+<h4 id="betaSoonTitle">Скоро</h4>
+<p id="betaSoonText">Завантаження BETA-версії буде доступне найближчим часом. Слідкуй за розділом "Новини"!</p>
 </div>
 </div>
 </div>
@@ -723,11 +753,15 @@
 <span class="beta-tag">BETA</span>
 <h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA</h3>
 <p class="beta-desc">Рання тестова збірка з новими функціями, які ще не потрапили у стабільну версію. Можливі баги — повідом про них у підтримці.</p>
+<span class="version-badge" style="margin-top:.8rem;">
+<span class="version-dot"></span>
+<span class="version-num">BETA 17.08.2026</span>
+</span>
 </div>
-<span class="beta-dl-btn beta-dl-btn-soon">
-<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-            Скоро
-        </span>
+<a class="beta-dl-btn" href="#" id="betaCalloutBtn" onclick="openModal('betaModal'); return false;">
+<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+<span id="betaCalloutBtnText">Завантажити BETA</span>
+</a>
 </div>
 </section>
 <!-- FEATURES -->
@@ -1081,6 +1115,39 @@
         document.getElementById('betaDlBtn').classList.remove('enabled');
     }
     document.getElementById('betaModal').addEventListener('click', function(e){ if(e.target===this) closeBetaModal(); });
+
+    // Auto-expire BETA (17.08.2026): after 29.08.2026 the download is hidden
+    // and replaced with a "waiting for update" notice everywhere BETA is shown.
+    (function() {
+        const BETA_EXPIRY = new Date('2026-08-30T00:00:00'); // start of the day after 29.08.2026
+        function applyBetaExpiredState() {
+            if (new Date() < BETA_EXPIRY) return;
+
+            // Callout button on the homepage
+            const calloutBtn = document.getElementById('betaCalloutBtn');
+            if (calloutBtn) {
+                calloutBtn.classList.add('beta-dl-btn-soon');
+                calloutBtn.removeAttribute('onclick');
+                calloutBtn.href = '#';
+                calloutBtn.addEventListener('click', e => e.preventDefault());
+                const calloutTxt = document.getElementById('betaCalloutBtnText');
+                if (calloutTxt) calloutTxt.textContent = 'Очікує оновлення';
+            }
+
+            // Modal: hide the active download flow, show the "waiting" box
+            const activeFlow = document.getElementById('betaModalActiveFlow');
+            const soonBox = document.getElementById('betaModalSoonBox');
+            if (activeFlow) activeFlow.style.display = 'none';
+            if (soonBox) {
+                soonBox.style.display = 'block';
+                const soonTitle = document.getElementById('betaSoonTitle');
+                const soonText = document.getElementById('betaSoonText');
+                if (soonTitle) soonTitle.textContent = 'Очікує оновлення';
+                if (soonText) soonText.textContent = 'Ця BETA-версія (17.08.2026) вже не актуальна і наразі очікує оновлення. Слідкуй за розділом "Новини"!';
+            }
+        }
+        applyBetaExpiredState();
+    })();
     function copyCardNumber() {
         const number = document.getElementById('cardNumber').textContent.replace(/\s/g,'');
         navigator.clipboard.writeText(number).then(() => {
