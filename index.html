@@ -544,8 +544,8 @@
         </h3>
 <div class="modal-content-box">
 <h4>Коротка інструкція</h4>
-<p>Крок 1: Завантаж архів з <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher за посиланням нижче та розпакуй його у будь-яку зручну папку.</p>
-<p>Крок 2: Запусти <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher.exe. Windows Defender може показати попередження — просто натисни "Докладніше" → "Виконати у будь-якому разі" (це стандартна поведінка для нових програм без цифрового підпису).</p>
+<p>Крок 1: Завантаж <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher.exe за посиланням нижче — це готовий файл, розпаковувати архів більше не потрібно.</p>
+<p>Крок 2: Запусти завантажений <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher.exe. Windows Defender може показати попередження — просто натисни "Докладніше" → "Виконати у будь-якому разі" (це стандартна поведінка для нових програм без цифрового підпису).</p>
 <p>Крок 3: Обери версію Minecraft, яку хочеш встановити, та натисни "Грати". Лаунчер сам завантажить потрібні файли.</p>
 <p>Переконайся, що ти ознайомився з інструкцією, перш ніж переходити до завантаження.</p>
 </div>
@@ -553,7 +553,7 @@
 <input id="win1011Agree" onchange="toggleOsBtn('win1011')" type="checkbox"/>
 <label for="win1011Agree">Я ознайомився з інструкцією і розумію, як встановити та запустити <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</label>
 </div>
-<a class="modal-dl-btn" href="https://github.com/devalfastudios/G9-Launcher-Minecraft/releases/download/1.6/G9_Launcher.exe" id="win1011DlBtn" target="_blank">
+<a class="modal-dl-btn" href="https://github.com/devalfastudios/G9-Launcher-Minecraft/releases/download/1.7/G9Launcher.exe" id="win1011DlBtn" target="_blank">
 <svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
             Завантажити для Windows 10 / 11
         </a>
@@ -673,8 +673,8 @@
         </h3>
 <div class="modal-content-box">
 <h4>Перед завантаженням прочитай</h4>
-<p><span class="beta-tag" style="margin-bottom:0;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span></p>
-<p>Це рання тестова збірка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Вона може містити неперевірені функції, помилки, збої в роботі лаунчера або гри, а також бути нестабільною порівняно зі стабільною версією.</p>
+<p><span class="beta-tag" style="margin-bottom:0;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span> <span class="cs-tag" style="background:#e57373;color:#3d0f0f;margin-left:8px;">НЕ АКТУАЛЬНА</span></p>
+<p>Це рання тестова збірка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Після виходу стабільної версії 1.7 ця BETA втратила актуальність — більшість її нововведень вже увійшли до стабільної збірки. Вона може містити неперевірені функції, помилки, збої в роботі лаунчера або гри, а також бути нестабільною порівняно зі стабільною версією.</p>
 <p>Встановлюючи та використовуючи BETA-версію, ти робиш це на власний ризик. Уся відповідальність за можливі наслідки використання (втрата даних, збереження, конфлікти з модами тощо) лежить на користувачі, який завантажує програму.</p>
 <p>Команда <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios докладає зусиль, щоб BETA працювала стабільно, але не гарантує повну відсутність багів. Якщо знайдеш проблему — будь ласка, повідом у розділі "Підтримка".</p>
 </div>
@@ -752,7 +752,7 @@
 <div class="beta-callout-left">
 <span class="beta-tag">BETA</span>
 <h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA</h3>
-<p class="beta-desc">Рання тестова збірка з новими функціями, які ще не потрапили у стабільну версію. Можливі баги — повідом про них у підтримці.</p>
+<p class="beta-desc">Рання тестова збірка. Після виходу v1.7 ця BETA вже не актуальна — більшість її функцій увійшли до стабільної версії, тож окремого сенсу в ній більше немає. Завантажити її як і раніше можна, але користуйся на свій розсуд.</p>
 <span class="version-badge" style="margin-top:.8rem;">
 <span class="version-dot"></span>
 <span class="version-num">BETA 17.08.2026</span>
@@ -1016,8 +1016,12 @@
 <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.95rem;">Останні оновлення, релізи та новини від команди <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios.</p>
 <div class="news-list">
 <div class="news-card">
-<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.6</h3><span class="news-date">02.08.2026</span></div>
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.7</h3><span class="news-date">25.08.2026</span></div>
 <span class="news-badge">Актуальна версія</span>
+<p>Найбільше оновлення лаунчера! Додано G9 Mods — вбудований пошук і завантаження модів прямо з Modrinth та CurseForge. З'явився Менеджер світів: перегляд усіх світів, копіювання сіда, окреме скидання Незеру/Енду та бекап світу в ZIP. Новий переглядач скриншотів на весь екран з поширенням знімків. Додано вхід через ліцензійний Microsoft-акаунт. Тепер лаунчер веде статистику ігрового часу по збірках та серверах. З'явились AI Power Manager (еко-режим на батареї) та AI Memory Manager (очищення сміття лаунчера). Можна перетягуванням змінювати порядок кнопок бокової панелі та ділитися збірками через спеціальні коди. Discord-статус тепер показує лоадер і назву збірки. Автооновлення переведено на новий сервер.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.6</h3><span class="news-date">02.08.2026</span></div>
 <p>Велике оновлення! Правий клік на версію у списку тепер відкриває контекстне меню з пунктом «Видалити вибрану версію» (виправлено згортання вікна при цьому). Кнопка «Грати» тепер сама показує «Завантажити», якщо версія ще не встановлена — і питає, чи одразу запустити гру після завантаження. Додано вибір стилю кнопок вікна (Windows / macOS). Тепер можна перенести всю папку зберігання гри (версії, збірки, моди, скіни) в інше місце, наприклад на інший диск. Прибрано список встановлених Java — залишився лише ручний вибір шляху. Заокруглені кути головного вікна. Також додано новий снапшот 5 від версії 26.3!</p>
 </div>
 <div class="news-card">
