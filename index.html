@@ -252,6 +252,12 @@
         .screenshot-img:hover { transform:scale(1.03); border-color:var(--border-strong); }
 
         /* TUTORIALS */
+        .tutorials-toggle { display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; user-select:none; margin-bottom:2.5rem; }
+        .tutorials-toggle .section-title { margin-bottom:0; }
+        .tutorials-toggle-arrow { transition:transform .3s; flex-shrink:0; color:var(--text-dim); }
+        #tutorials.open .tutorials-toggle-arrow { transform:rotate(180deg); color:var(--primary-light); }
+        .tutorial-list-wrap { max-height:0; overflow:hidden; transition:max-height .5s ease; }
+        #tutorials.open .tutorial-list-wrap { max-height:3000px; }
         .tutorial-list { display:flex; flex-direction:column; gap:.9rem; }
         .tutorial-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:border-color .2s; }
         .tutorial-item.open { border-color:var(--border-strong); }
@@ -669,29 +675,17 @@
 <button class="modal-close" onclick="closeBetaModal()">✕</button>
 <h3>
 <svg class="icon" fill="none" height="20" stroke="#f0b90b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
-            Увага — тестова BETA-версія
+            BETA-версія закрита
         </h3>
 <div class="modal-content-box">
-<h4>Перед завантаженням прочитай</h4>
-<p><span class="beta-tag" style="margin-bottom:0;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span> <span class="cs-tag" style="background:#e57373;color:#3d0f0f;margin-left:8px;">НЕ АКТУАЛЬНА</span></p>
-<p>Це рання тестова збірка <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Після виходу стабільної версії 1.7 ця BETA втратила актуальність — більшість її нововведень вже увійшли до стабільної збірки. Вона може містити неперевірені функції, помилки, збої в роботі лаунчера або гри, а також бути нестабільною порівняно зі стабільною версією.</p>
-<p>Встановлюючи та використовуючи BETA-версію, ти робиш це на власний ризик. Уся відповідальність за можливі наслідки використання (втрата даних, збереження, конфлікти з модами тощо) лежить на користувачі, який завантажує програму.</p>
-<p>Команда <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios докладає зусиль, щоб BETA працювала стабільно, але не гарантує повну відсутність багів. Якщо знайдеш проблему — будь ласка, повідом у розділі "Підтримка".</p>
+<p><span class="beta-tag" style="margin-bottom:0;background:var(--text-dim);color:#0c1712;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span> <span class="cs-tag" style="background:#e57373;color:#3d0f0f;margin-left:8px;">НЕ АКТУАЛЬНА</span></p>
+<p>Тестування цієї збірки <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher завершено, а завантаження BETA закрито — усі її напрацювання вже увійшли до стабільної версії.</p>
+<p>Ми вже готуємо нову версію лаунчера. Слідкуй за оновленнями в розділі "Новини"!</p>
 </div>
-<div id="betaModalActiveFlow">
-<div class="modal-agree">
-<input id="betaAgree" onchange="toggleOsBtn('beta')" type="checkbox"/>
-<label for="betaAgree">Я розумію ризики використання BETA-версії та приймаю всю відповідальність за наслідки на себе</label>
-</div>
-<a class="modal-dl-btn" href="https://drive.google.com/file/d/1l4R_tCkW8BCiD08XnR4Enxq_qfuWT97n/view?usp=sharing" id="betaDlBtn" rel="noopener" target="_blank">
-<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
-            Завантажити BETA
-        </a>
-</div>
-<div class="os-soon-box" id="betaModalSoonBox" style="display:none; padding-top:.5rem;">
+<div class="os-soon-box" style="padding-top:.5rem;">
 <svg fill="none" height="30" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="30"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-<h4 id="betaSoonTitle">Скоро</h4>
-<p id="betaSoonText">Завантаження BETA-версії буде доступне найближчим часом. Слідкуй за розділом "Новини"!</p>
+<h4>Скоро нова версія</h4>
+<p>Завантаження BETA більше не доступне. Слідкуй за розділом "Новини" — анонс наступної версії вже незабаром!</p>
 </div>
 </div>
 </div>
@@ -750,18 +744,18 @@
 <section class="beta-callout animate-on-scroll" id="beta">
 <div class="beta-callout-box">
 <div class="beta-callout-left">
-<span class="beta-tag">BETA</span>
+<span class="beta-tag" style="background:var(--text-dim);color:#0c1712;">BETA ЗАКРИТА</span>
 <h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA</h3>
-<p class="beta-desc">Рання тестова збірка. Після виходу v1.7 ця BETA вже не актуальна — більшість її функцій увійшли до стабільної версії, тож окремого сенсу в ній більше немає. Завантажити її як і раніше можна, але користуйся на свій розсуд.</p>
+<p class="beta-desc">Тестування BETA-версії завершено. Завантаження більше не доступне — усі напрацювання увійшли до стабільної збірки. Вже готуємо нову версію лаунчера, слідкуй за розділом "Новини"!</p>
 <span class="version-badge" style="margin-top:.8rem;">
 <span class="version-dot"></span>
-<span class="version-num">BETA 17.08.2026</span>
+<span class="version-num">Скоро нова версія</span>
 </span>
 </div>
-<a class="beta-dl-btn" href="#" id="betaCalloutBtn" onclick="openModal('betaModal'); return false;">
-<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
-<span id="betaCalloutBtnText">Завантажити BETA</span>
-</a>
+<span class="beta-dl-btn beta-dl-btn-soon">
+<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span>Скоро нова версія</span>
+</span>
 </div>
 </section>
 <!-- FEATURES -->
@@ -813,7 +807,11 @@
 </section>
 <!-- TUTORIALS -->
 <section class="animate-on-scroll" id="tutorials">
+<div class="tutorials-toggle" onclick="toggleTutorialsSection()">
 <h2 class="section-title">Гайди по лаунчеру</h2>
+<svg class="tutorials-toggle-arrow icon" fill="none" height="24" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+<div class="tutorial-list-wrap">
 <div class="tutorial-list">
 <div class="tutorial-item" id="tut-1">
 <div class="tutorial-header" onclick="toggleTutorial('tut-1')">
@@ -874,7 +872,15 @@
 <svg class="tutorial-arrow icon" fill="none" height="20" stroke="var(--primary-dark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><polyline points="6 9 12 15 18 9"></polyline></svg>
 </div>
 <div class="tutorial-body">
-<p class="tutorial-placeholder">[ Він ще в розробці!!! ]</p>
+<p class="tutorial-placeholder">[ Все дуже просто — жодних складних налаштувань не потрібно.
+
+Крок 1: Відкрий <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher і перейди в розділ "Налаштування" в боковому меню.
+
+Крок 2: Знайди пункт "AiGameBooster" та увімкни його перемикачем.
+
+Крок 3: Запускай гру як зазвичай — Ai GameBooster сам проаналізує систему та застосує оптимальні налаштування продуктивності в фоновому режимі, без додаткових дій з твого боку.
+
+Насолоджуйся стабільнішим FPS та комфортною грою! ]</p>
 </div>
 </div>
 <div class="tutorial-item" id="tut-5">
@@ -885,6 +891,7 @@
 </div>
 <div class="tutorial-body">
 <p class="tutorial-placeholder">[ їх немає або ми виправляємо оновленнями! ]</p>
+</div>
 </div>
 </div>
 </div>
@@ -1119,8 +1126,6 @@
     document.getElementById('coffeeModal').addEventListener('click', function(e){ if(e.target===this) closeModal('coffeeModal'); });
     function closeBetaModal() {
         closeModal('betaModal');
-        document.getElementById('betaAgree').checked = false;
-        document.getElementById('betaDlBtn').classList.remove('enabled');
     }
     document.getElementById('betaModal').addEventListener('click', function(e){ if(e.target===this) closeBetaModal(); });
     function copyCardNumber() {
@@ -1138,9 +1143,10 @@
 
     function toggleTutorial(id) {
         const item = document.getElementById(id);
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.tutorial-item').forEach(i => i.classList.remove('open'));
-        if(!isOpen) item.classList.add('open');
+        item.classList.toggle('open');
+    }
+    function toggleTutorialsSection() {
+        document.getElementById('tutorials').classList.toggle('open');
     }
 
     function switchTab(name) {
