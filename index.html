@@ -728,6 +728,15 @@
             color:#0c1712; padding:3px 12px; border-radius:6px; font-weight:700;
             margin-bottom:.6rem;
         }
+        .news-badge-beta { background:var(--n-yellow); color:#402d00; margin-left:6px; }
+        .news-warn { background:rgba(229,115,115,.1); border:1px solid rgba(229,115,115,.45); border-radius:10px; padding:.8rem 1rem; margin-top:.8rem; font-size:.86rem; color:var(--text-muted); line-height:1.55; }
+        .news-warn b { color:#e57373; }
+        .news-btn { display:inline-flex; align-items:center; gap:8px; margin-top:.9rem; background:var(--n-yellow); color:#402d00; padding:9px 18px; border-radius:8px; font-weight:700; font-size:.85rem; border:none; cursor:pointer; font-family:'Outfit',sans-serif; transition:all .3s var(--ease-standard); }
+        .news-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(240,185,11,.3); }
+        .beta-warn-list { margin:.4rem 0 0 1.1rem; padding:0; }
+        .beta-warn-list li { margin-bottom:.35rem; font-size:.9rem; color:var(--text-muted); line-height:1.5; }
+        .modal-dl-btn.beta-variant { background:var(--n-yellow); color:#402d00; box-shadow:0 6px 18px rgba(240,185,11,.25); }
+        .modal-dl-btn.beta-variant.enabled:hover { background:#ffd23f; }
         .mc-block-icon {
             display:inline-block; width:19px; height:19px; border-radius:3px;
             background:
@@ -833,7 +842,7 @@
 <input id="win1011Agree" onchange="toggleOsBtn('win1011')" type="checkbox"/>
 <label for="win1011Agree">Я ознайомився з інструкцією і розумію, як встановити та запустити <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher</label>
 </div>
-<a class="modal-dl-btn" href="https://github.com/devalfastudios/G9-Launcher-Minecraft/releases/download/1.10/G9Launcher.exe" id="win1011DlBtn" target="_blank">
+<a class="modal-dl-btn" href="https://github.com/devalfastudios/G9-Launcher-Minecraft/releases/download/1.11/G9Launcher.exe" id="win1011DlBtn" target="_blank">
 <svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
             Завантажити для Windows 10 / 11
         </a>
@@ -949,18 +958,28 @@
 <button class="modal-close" onclick="closeBetaModal()">✕</button>
 <h3>
 <svg class="icon" fill="none" height="20" stroke="#f0b90b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="20"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
-            BETA-версія закрита
+            Увага: нестабільна BETA-версія
         </h3>
 <div class="modal-content-box">
-<p><span class="beta-tag" style="margin-bottom:0;background:var(--text-dim);color:#0c1712;">BETA</span> <span class="version-num" style="margin-left:8px;">17.08.2026</span> <span class="cs-tag" style="background:#e57373;color:#3d0f0f;margin-left:8px;">НЕ АКТУАЛЬНА</span></p>
-<p>Тестування цієї збірки <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher завершено, а завантаження BETA закрито — усі її напрацювання вже увійшли до стабільної версії.</p>
-<p>Ми вже готуємо нову версію лаунчера. Слідкуй за оновленнями в розділі "Новини"!</p>
+<p><span class="beta-tag" style="margin-bottom:0;">BETA 0.1</span> <span class="version-num" style="margin-left:8px;">PyQt6</span> <span class="cs-tag" style="background:#e57373;color:#3d0f0f;margin-left:8px;">НЕСТАБІЛЬНА</span></p>
+<p>Це перша тестова збірка нового покоління <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher. Вона ще перебуває в розробці, тому перед завантаженням зверни увагу на ризики:</p>
+<ul class="beta-warn-list">
+<li>Лаунчер може працювати нестабільно, зависати або вилітати.</li>
+<li>Частина функцій зі стабільної версії може бути відсутня або працювати некоректно.</li>
+<li>Можливі помилки під час встановлення та запуску версій Minecraft, а також проблеми зі збереженими налаштуваннями й акаунтами.</li>
+<li>Збірка надається «як є» — команда <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios не гарантує її безперебійної роботи.</li>
+<li>Для щоденної гри рекомендуємо стабільну версію v1.11.</li>
+</ul>
+<p>Про помилки, які ти знайдеш, повідомляй нам у Telegram — це допоможе зробити лаунчер краще.</p>
 </div>
-<div class="os-soon-box" style="padding-top:.5rem;">
-<svg fill="none" height="30" stroke="var(--n-yellow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="30"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-<h4>Скоро нова версія</h4>
-<p>Завантаження BETA більше не доступне. Слідкуй за розділом "Новини" — анонс наступної версії вже незабаром!</p>
+<div class="modal-agree">
+<input id="betaAgree" onchange="toggleOsBtn('beta')" type="checkbox"/>
+<label for="betaAgree">Я розумію, що BETA-версія нестабільна, і погоджуюсь завантажувати та використовувати її на власний ризик</label>
 </div>
+<a class="modal-dl-btn beta-variant" href="https://github.com/devalfastudios/G9-Launcher-Minecraft/releases/download/Beta_0.1/G9LauncherBETA.exe" id="betaDlBtn" target="_blank" rel="noopener">
+<svg class="icon" fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+            Завантажити BETA 0.1
+        </a>
 </div>
 </div>
 <!-- HEADER -->
@@ -1018,18 +1037,18 @@
 <section class="beta-callout animate-on-scroll" id="beta">
 <div class="beta-callout-box">
 <div class="beta-callout-left">
-<span class="beta-tag" style="background:var(--text-dim);color:#0c1712;">BETA ЗАКРИТА</span>
-<h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA</h3>
-<p class="beta-desc">Тестування BETA-версії завершено. Завантаження більше не доступне — усі напрацювання увійшли до стабільної збірки. Вже готуємо нову версію лаунчера, слідкуй за розділом "Новини"!</p>
+<span class="beta-tag">АКТУАЛЬНА БЕТА</span>
+<h3 class="beta-title"><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher: BETA 0.1</h3>
+<p class="beta-desc">Нове покоління лаунчера на PyQt6. Збірка експериментальна й може працювати нестабільно — перед завантаженням уважно ознайомся з ризиками.</p>
 <span class="version-badge" style="margin-top:.8rem;">
 <span class="version-dot"></span>
-<span class="version-num">Скоро нова версія</span>
+<span class="version-num">Beta 0.1 · PyQt6</span>
 </span>
 </div>
-<span class="beta-dl-btn beta-dl-btn-soon">
-<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
-<span>Скоро нова версія</span>
-</span>
+<a class="beta-dl-btn" href="#" onclick="openBetaModal();return false;">
+<svg class="icon" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+<span>Завантажити BETA</span>
+</a>
 </div>
 </section>
 <!-- FEATURES -->
@@ -1467,8 +1486,19 @@
 <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.95rem;">Останні оновлення, релізи та новини від команди <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Studios.</p>
 <div class="news-list">
 <div class="news-card">
-<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.10</h3><span class="news-date">22.09.2026</span></div>
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.11</h3><span class="news-date">04.10.2026</span></div>
 <span class="news-badge">Актуальна версія</span>
+<p>Нові снапшоти від 26.4 додано, нові функції та виправлення у збірках, оптимізація та виправлення багів з роботи з версіями, можливість змінювати колір ніків. REWORK G9 Mods.</p>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher BETA 0.1 — нове покоління</h3><span class="news-date">04.10.2026</span></div>
+<span class="news-badge news-badge-beta">Актуальна бета</span>
+<p>Представляємо нове покоління <span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher — повністю переписаний лаунчер на PyQt6. Новий інтерфейс, нова архітектура та значно вищий потенціал для майбутніх оновлень. Це перша публічна бета-збірка (0.1), тож ми чекаємо на ваші відгуки та повідомлення про помилки в нашому Telegram.</p>
+<div class="news-warn"><b>Увага:</b> бета-версія нестабільна — можливі помилки, вильоти та відсутність частини функцій. Для повсякденної гри рекомендуємо стабільну версію v1.11.</div>
+<button class="news-btn" onclick="openBetaModal()"><svg class="icon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg> Завантажити BETA</button>
+</div>
+<div class="news-card">
+<div class="news-card-top"><h3><span style="color:var(--g-blue)">G</span><span style="color:var(--n-yellow)">9</span> Launcher v1.10</h3><span class="news-date">22.09.2026</span></div>
 <p>1.10: Нова версія, нові можливості! "Оптимізація: сторінка «Оберіть версію» більше не перечитує диск і не перебудовує весь список версій на кожне натискання клавіші в пошуку — це й було головною причиною лагів при великій кількості встановлених версій/збірок. Виправлено помилкове позначення Forge/Fabric/NeoForge/Quilt як \"встановлено\" (і пов'язаний з цим збій запуску), коли насправді завантажена лише Vanilla тієї ж версії. Додано перемикач анімації логотипа на сплеш-екрані, виправлено обрізаний текст на деяких екранах/масштабуваннях, підтримку Minecraft 26.3 (Vanilla + всі лоадери), а Снапшоти й Пре-релізи тепер у списку категорій поруч з Alpha/Beta. </p>
 </div>
 <div class="news-card">
@@ -1580,8 +1610,13 @@
     }
     document.getElementById('osModal').addEventListener('click', function(e){ if(e.target===this) closeOsModal(); });
     document.getElementById('coffeeModal').addEventListener('click', function(e){ if(e.target===this) closeModal('coffeeModal'); });
+    function openBetaModal() { openModal('betaModal'); }
     function closeBetaModal() {
         closeModal('betaModal');
+        const cb = document.getElementById('betaAgree');
+        const btn = document.getElementById('betaDlBtn');
+        if (cb) cb.checked = false;
+        if (btn) btn.classList.remove('enabled');
     }
     document.getElementById('betaModal').addEventListener('click', function(e){ if(e.target===this) closeBetaModal(); });
     function copyCardNumber() {
